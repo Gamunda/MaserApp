@@ -1,7 +1,81 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="WorkDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Z:\maser</Value>
+    </Setting>
+    <Setting Name="Taxa1332File" Type="System.String" Scope="User">
+      <Value Profile="(Default)">taxa1332.zip</Value>
+    </Setting>
+    <Setting Name="Taxa1332FTP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ftp1.msnj.us</Value>
+    </Setting>
+    <Setting Name="Taxa1332User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">edmunds</Value>
+    </Setting>
+    <Setting Name="Taxa1332Pwd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">obbidtig</Value>
+    </Setting>
+    <Setting Name="AcegisFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gis1332.zip</Value>
+    </Setting>
+    <Setting Name="AcegisFTP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ftp1.msnj.us</Value>
+    </Setting>
+    <Setting Name="AcegisUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mhgis</Value>
+    </Setting>
+    <Setting Name="AcegisPwd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">hakfomak</Value>
+    </Setting>
+    <Setting Name="SecTaxa1332" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecAcegis" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecModiv" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecCo" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecSeptics" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecBCO" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecZBA" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecPLA" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecCD" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecCPM" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecFTG" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SecZone" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SecMac" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Taxa1332UnzipFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">taxa1332.dat</Value>
+    </Setting>
+    <Setting Name="AcegisUnzipFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gis1332.txt</Value>
+    </Setting>
+    <Setting Name="WorkDB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Z:\maser\workdb.mdb</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

@@ -40,6 +40,7 @@ Partial Class MaserMain
         Me.ssStatusStrip = New System.Windows.Forms.StatusStrip()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.prbProgress = New System.Windows.Forms.ToolStripProgressBar()
+        Me.bgwQueue = New System.ComponentModel.BackgroundWorker()
         Me.msMain.SuspendLayout()
         Me.ssStatusStrip.SuspendLayout()
         Me.SuspendLayout()
@@ -187,6 +188,9 @@ Partial Class MaserMain
         Me.prbProgress.Name = "prbProgress"
         Me.prbProgress.Size = New System.Drawing.Size(300, 16)
         '
+        'bgwQueue
+        '
+        '
         'MaserMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -230,4 +234,5 @@ Partial Class MaserMain
     Friend WithEvents ssStatusStrip As StatusStrip
     Friend WithEvents lblStatus As ToolStripStatusLabel
     Friend WithEvents prbProgress As ToolStripProgressBar
+    Friend WithEvents bgwQueue As System.ComponentModel.BackgroundWorker
 End Class
