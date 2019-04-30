@@ -37,12 +37,12 @@ Partial Class MaserMain
         Me.btnStart = New System.Windows.Forms.Button()
         Me.btnPause = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
-        Me.ssStatusStrip = New System.Windows.Forms.StatusStrip()
-        Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.prbProgress = New System.Windows.Forms.ToolStripProgressBar()
         Me.bgwQueue = New System.ComponentModel.BackgroundWorker()
+        Me.pgbTask = New System.Windows.Forms.ProgressBar()
+        Me.pgbOverall = New System.Windows.Forms.ProgressBar()
+        Me.lblTaskStatus = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.msMain.SuspendLayout()
-        Me.ssStatusStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'msMain
@@ -64,7 +64,7 @@ Partial Class MaserMain
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExitToolStripMenuItem.Text = "E&xit"
         '
         'ToolsToolStripMenuItem
@@ -123,6 +123,7 @@ Partial Class MaserMain
         Me.rtbConsole.ForeColor = System.Drawing.Color.White
         Me.rtbConsole.Location = New System.Drawing.Point(31, 27)
         Me.rtbConsole.Name = "rtbConsole"
+        Me.rtbConsole.ReadOnly = True
         Me.rtbConsole.Size = New System.Drawing.Size(738, 318)
         Me.rtbConsole.TabIndex = 1
         Me.rtbConsole.Text = ""
@@ -132,7 +133,7 @@ Partial Class MaserMain
         Me.btnStart.BackColor = System.Drawing.Color.DarkGreen
         Me.btnStart.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnStart.ForeColor = System.Drawing.Color.White
-        Me.btnStart.Location = New System.Drawing.Point(669, 351)
+        Me.btnStart.Location = New System.Drawing.Point(669, 371)
         Me.btnStart.Name = "btnStart"
         Me.btnStart.Size = New System.Drawing.Size(100, 40)
         Me.btnStart.TabIndex = 2
@@ -145,7 +146,7 @@ Partial Class MaserMain
         Me.btnPause.Enabled = False
         Me.btnPause.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPause.ForeColor = System.Drawing.Color.White
-        Me.btnPause.Location = New System.Drawing.Point(669, 397)
+        Me.btnPause.Location = New System.Drawing.Point(669, 417)
         Me.btnPause.Name = "btnPause"
         Me.btnPause.Size = New System.Drawing.Size(48, 23)
         Me.btnPause.TabIndex = 3
@@ -159,7 +160,7 @@ Partial Class MaserMain
         Me.btnCancel.Enabled = False
         Me.btnCancel.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnCancel.ForeColor = System.Drawing.Color.White
-        Me.btnCancel.Location = New System.Drawing.Point(721, 397)
+        Me.btnCancel.Location = New System.Drawing.Point(721, 417)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(48, 23)
         Me.btnCancel.TabIndex = 4
@@ -167,29 +168,47 @@ Partial Class MaserMain
         Me.btnCancel.UseVisualStyleBackColor = False
         Me.btnCancel.Visible = False
         '
-        'ssStatusStrip
-        '
-        Me.ssStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus, Me.prbProgress})
-        Me.ssStatusStrip.Location = New System.Drawing.Point(0, 428)
-        Me.ssStatusStrip.Name = "ssStatusStrip"
-        Me.ssStatusStrip.Size = New System.Drawing.Size(800, 22)
-        Me.ssStatusStrip.TabIndex = 5
-        Me.ssStatusStrip.Text = "StatusStrip1"
-        '
-        'lblStatus
-        '
-        Me.lblStatus.AutoSize = False
-        Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(466, 17)
-        Me.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'prbProgress
-        '
-        Me.prbProgress.Name = "prbProgress"
-        Me.prbProgress.Size = New System.Drawing.Size(300, 16)
-        '
         'bgwQueue
         '
+        Me.bgwQueue.WorkerReportsProgress = True
+        Me.bgwQueue.WorkerSupportsCancellation = True
+        '
+        'pgbTask
+        '
+        Me.pgbTask.BackColor = System.Drawing.SystemColors.Control
+        Me.pgbTask.ForeColor = System.Drawing.Color.Khaki
+        Me.pgbTask.Location = New System.Drawing.Point(31, 371)
+        Me.pgbTask.Name = "pgbTask"
+        Me.pgbTask.Size = New System.Drawing.Size(632, 20)
+        Me.pgbTask.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.pgbTask.TabIndex = 6
+        '
+        'pgbOverall
+        '
+        Me.pgbOverall.ForeColor = System.Drawing.Color.LawnGreen
+        Me.pgbOverall.Location = New System.Drawing.Point(31, 418)
+        Me.pgbOverall.Name = "pgbOverall"
+        Me.pgbOverall.Size = New System.Drawing.Size(632, 20)
+        Me.pgbOverall.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.pgbOverall.TabIndex = 7
+        '
+        'lblTaskStatus
+        '
+        Me.lblTaskStatus.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTaskStatus.Location = New System.Drawing.Point(31, 348)
+        Me.lblTaskStatus.Name = "lblTaskStatus"
+        Me.lblTaskStatus.Size = New System.Drawing.Size(632, 23)
+        Me.lblTaskStatus.TabIndex = 8
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Arial Narrow", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(31, 397)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(39, 15)
+        Me.Label2.TabIndex = 9
+        Me.Label2.Text = "Overall"
         '
         'MaserMain
         '
@@ -197,7 +216,10 @@ Partial Class MaserMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.ControlBox = False
-        Me.Controls.Add(Me.ssStatusStrip)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lblTaskStatus)
+        Me.Controls.Add(Me.pgbOverall)
+        Me.Controls.Add(Me.pgbTask)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnPause)
         Me.Controls.Add(Me.btnStart)
@@ -209,8 +231,6 @@ Partial Class MaserMain
         Me.Text = "Maser"
         Me.msMain.ResumeLayout(False)
         Me.msMain.PerformLayout()
-        Me.ssStatusStrip.ResumeLayout(False)
-        Me.ssStatusStrip.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -231,8 +251,9 @@ Partial Class MaserMain
     Friend WithEvents btnStart As Button
     Friend WithEvents btnPause As Button
     Friend WithEvents btnCancel As Button
-    Friend WithEvents ssStatusStrip As StatusStrip
-    Friend WithEvents lblStatus As ToolStripStatusLabel
-    Friend WithEvents prbProgress As ToolStripProgressBar
     Friend WithEvents bgwQueue As System.ComponentModel.BackgroundWorker
+    Friend WithEvents pgbTask As ProgressBar
+    Friend WithEvents pgbOverall As ProgressBar
+    Friend WithEvents lblTaskStatus As Label
+    Friend WithEvents Label2 As Label
 End Class

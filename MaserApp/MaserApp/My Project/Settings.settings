@@ -75,7 +75,7 @@
       <Value Profile="(Default)">gis1332.txt</Value>
     </Setting>
     <Setting Name="WorkDB" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Z:\maser\workdb.mdb</Value>
+      <Value Profile="(Default)">C:\Users\johnadams\Documents\workdb.mdb</Value>
     </Setting>
   </Settings>
 </SettingsFile>

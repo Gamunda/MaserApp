@@ -344,7 +344,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Z:\maser\workdb.mdb")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\johnadams\Documents\workdb.mdb")>  _
         Public Property WorkDB() As String
             Get
                 Return CType(Me("WorkDB"),String)
