@@ -30,16 +30,16 @@
       <Value Profile="(Default)">hakfomak</Value>
     </Setting>
     <Setting Name="SecTaxa1332" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SecAcegis" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SecModiv" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SecCo" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SecSeptics" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -76,6 +76,12 @@
     </Setting>
     <Setting Name="WorkDB" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\johnadams\Documents\workdb.mdb</Value>
+    </Setting>
+    <Setting Name="CONewDB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\johnadams\Documents\CONew.mdb</Value>
+    </Setting>
+    <Setting Name="SendDB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\johnadams\Documents\Send\workdb.mdb</Value>
     </Setting>
   </Settings>
 </SettingsFile>

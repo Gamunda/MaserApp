@@ -164,7 +164,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property SecTaxa1332() As Boolean
             Get
                 Return CType(Me("SecTaxa1332"),Boolean)
@@ -176,7 +176,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property SecAcegis() As Boolean
             Get
                 Return CType(Me("SecAcegis"),Boolean)
@@ -200,7 +200,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property SecCo() As Boolean
             Get
                 Return CType(Me("SecCo"),Boolean)
@@ -351,6 +351,30 @@ Namespace My
             End Get
             Set
                 Me("WorkDB") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\johnadams\Documents\CONew.mdb")>  _
+        Public Property CONewDB() As String
+            Get
+                Return CType(Me("CONewDB"),String)
+            End Get
+            Set
+                Me("CONewDB") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\johnadams\Documents\Send\workdb.mdb")>  _
+        Public Property SendDB() As String
+            Get
+                Return CType(Me("SendDB"),String)
+            End Get
+            Set
+                Me("SendDB") = value
             End Set
         End Property
     End Class

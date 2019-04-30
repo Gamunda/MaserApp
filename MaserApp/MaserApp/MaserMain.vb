@@ -203,7 +203,7 @@ Public Class MaserMain
     End Function
     Private Function funTaxa1332() As Integer
         If My.Settings.SecTaxa1332 = False Then
-            FormatProgressReport(0, "", "#Taxa1332 Skipped #")
+            FormatProgressReport(0, "", "#Taxa1332 Skipped #", 8)
             Return 0
             Exit Function
         End If
@@ -229,7 +229,7 @@ Public Class MaserMain
     End Function
     Private Function funAcegis() As Integer
         If My.Settings.SecAcegis = False Then
-            FormatProgressReport(0, "", "# Acegis Skipped #")
+            FormatProgressReport(0, "", "# Acegis Skipped #", 16)
             Return 0
             Exit Function
         End If
@@ -267,7 +267,7 @@ Public Class MaserMain
     End Function
     Private Function funModiv() As Integer
         If My.Settings.SecModiv = False Then
-            FormatProgressReport(0, "", "# Modiv Skipped #")
+            FormatProgressReport(0, "", "# Modiv Skipped #", 24)
             Return 0
             Exit Function
         End If
@@ -373,9 +373,120 @@ Public Class MaserMain
         End If
 
         ' Export mod4
+        Dim mod4Fields(,) As String =
+            {{"Pin", "Text", "255"},
+            {"BLOCK", "Text", "255"},
+            {"LOT", "Text", "255"},
+            {"QUALIFIER", "Text", "255"},
+            {"NEWGISID", "Text", "255"},
+            {"GISKEY", "Text", "255"},
+            {"ACCOUNT", "Text", "255"},
+            {"PROP_CLASS", "Text", "255"},
+            {"PROP_LOCAT", "Text", "255"},
+            {"BUILD_DESC", "Text", "255"},
+            {"LAND_DESC", "Text", "255"},
+            {"ACREAGE", "Text", "255"},
+            {"ADDIT_LOTS", "Text", "255"},
+            {"ZONING", "Text", "255"},
+            {"TAX_MAP_PG", "Text", "255"},
+            {"LAND_VAL", "Text", "255"},
+            {"IMPROV_VAL", "Text", "255"},
+            {"NET_TAX_VAL", "Text", "255"},
+            {"OWNER", "Text", "255"},
+            {"OWNER_ADDR", "Text", "255"},
+            {"OWNER_CITY", "Text", "255"},
+            {"OWNER_STATE", "Text", "255"},
+            {"OWNER_ZIP", "Text", "255"},
+            {"MTG_ACCT", "Text", "255"},
+            {"PRIOR_YR_TX", "Text", "255"},
+            {"CURR_YR_TX", "Text", "255"},
+            {"DEED_BOOK", "Text", "255"},
+            {"DEED_PAGE", "Text", "255"},
+            {"DEED_DATE", "Text", "255"},
+            {"SALES_PRICE", "Text", "255"},
+            {"SENIOR_DED", "Text", "255"},
+            {"VETERAN_DED", "Text", "255"},
+            {"NUM_OWNERS", "Text", "255"},
+            {"DEDUC_AMT", "Text", "255"},
+            {"BILL_CODE", "Text", "255"},
+            {"NUM_DWELLING", "Text", "255"},
+            {"COMM_DWEL", "Text", "255"},
+            {"TAX_DEL_CO", "Text", "255"},
+            {"BUILD_CODE", "Text", "255"},
+            {"YEAR_BUILT", "Text", "255"},
+            {"ASSES_CODE", "Text", "255"},
+            {"SPEC_TX_CO", "Text", "255"},
+            {"EX_CODE1", "Text", "255"},
+            {"EX_AMT1", "Text", "255"},
+            {"EX_CODE2", "Text", "255"},
+            {"EX_AMT2", "Text", "255"},
+            {"EX_CODE3", "Text", "255"},
+            {"EX_AMT3", "Text", "255"},
+            {"EX_CODE4", "Text", "255"},
+            {"EX_AMT4", "Text", "255"},
+            {"UNSTRIPPED", "Text", "255"},
+            {"CENSUS_TRK", "Text", "255"},
+            {"CENSUS_BLK", "Text", "255"},
+            {"DED_WIDOWS", "Text", "255"},
+            {"DED_SURV_SPOUSE", "Text", "255"},
+            {"DED_DISABLED", "Text", "255"},
+            {"EPL_OWNER", "Text", "255"},
+            {"EPL_USE", "Text", "255"},
+            {"EPL_DESC", "Text", "255"},
+            {"EPL_FILE_DATE", "Text", "255"},
+            {"EPL_FURTHER_DATE", "Text", "255"},
+            {"EPL_STATUTE", "Text", "255"},
+            {"EPL_FNAME", "Text", "255"},
+            {"OLD_BLOCK", "Text", "255"},
+            {"OLD_LOT", "Text", "255"},
+            {"OLD_QUAL", "Text", "255"},
+            {"SALE_NU_CD", "Text", "255"},
+            {"TENANT_REB_FLAG", "Text", "255"},
+            {"TENANT_REB_YEAR", "Text", "255"},
+            {"TENANT_REB_TAX", "Text", "255"},
+            {"TENANT_REB_ASSMT", "Text", "255"},
+            {"NEIGHBORHOOD", "Text", "255"},
+            {"GIS_INDEX", "Text", "255"},
+            {"NEWGISID2", "Text", "255"}
+            }
+        If ExportAccess(mod4Fields, My.Settings.WorkDB, My.Settings.SendDB, "mod4") <> 0 Then
+            FormatProgressReport(0, "", "# Modiv Failed #")
+            Return 1
+            Exit Function
+        End If
 
         ' Export mod4qfarm
-
+        Dim mod4qfarmFields(,) As String =
+            {{"Pin", "Text", "255"},
+            {"BLOCK", "Text", "255"},
+            {"LOT", "Text", "255"},
+            {"QUALIFIER", "Text", "255"},
+            {"NEWGISID", "Text", "255"},
+            {"TAX_MAP_PG", "Text", "255"},
+            {"GISKEY", "Text", "255"},
+            {"ACCOUNT", "Text", "255"},
+            {"PROP_CLASS", "Text", "255"},
+            {"PROP_LOCAT", "Text", "255"},
+            {"BUILD_DESC", "Text", "255"},
+            {"LAND_DESC", "Text", "255"},
+            {"ACREAGE", "Text", "255"},
+            {"ADDIT_LOTS", "Text", "255"},
+            {"ZONING", "Text", "255"},
+            {"LAND_VAL", "Text", "255"},
+            {"IMPROV_VAL", "Text", "255"},
+            {"NET_TAX_VAL", "Text", "255"},
+            {"OWNER", "Text", "255"},
+            {"OWNER_ADDR", "Text", "255"},
+            {"OWNER_CITY", "Text", "255"},
+            {"OWNER_STATE", "Text", "255"},
+            {"OWNER_ZIP", "Text", "255"},
+            {"MTG_ACCT", "Text", "255"}
+            }
+        If ExportAccess(mod4qfarmFields, My.Settings.WorkDB, My.Settings.SendDB, "mod4qfarm") <> 0 Then
+            FormatProgressReport(0, "", "# Modiv Failed #")
+            Return 1
+            Exit Function
+        End If
 
         FormatProgressReport(0, "", "# Modiv Completed #", 24)
         Return 0
@@ -383,7 +494,7 @@ Public Class MaserMain
 
     Private Function funCo() As Integer
         If My.Settings.SecCo = False Then
-            FormatProgressReport(0, "", "# CO Skipped #")
+            FormatProgressReport(0, "", "# CO Skipped #", 32)
             Return 0
             Exit Function
         End If
@@ -393,26 +504,170 @@ Public Class MaserMain
 
         ' Delete comain records
         If RunAccessQuery("DROP TABLE CO_Main;") <> 0 Then
-            FormatProgressReport(0, "", "# Modiv Failed #")
+            FormatProgressReport(0, "", "# CO Failed #")
             Return 1
             Exit Function
         End If
 
         ' Import production comain
+        Dim comainFields(,) As String =
+            {{"Co_number", "Text", "50"},
+            {"BLOCK", "Text", "15"},
+            {"LOT", "Text", "15"},
+            {"Property_Owner_last", "Text", "50"},
+            {"Property_Owner_First", "Text", "50"},
+            {"Property_Owner_PHone", "Text", "50"},
+            {"Property_Address", "Text", "50"},
+            {"Property_aptnum", "Text", "50"},
+            {"Property_City", "Text", "50"},
+            {"Property_state", "Text", "50"},
+            {"Property_Zip", "Text", "50"},
+            {"Diff_Address", "Text", "50"},
+            {"Diff_City", "Text", "50"},
+            {"Diff_State", "Text", "50"},
+            {"Diff_zip", "Text", "50"},
+            {"Prospect_occ_LName", "Text", "50"},
+            {"Prospect_occ_First", "Text", "50"},
+            {"No_in_Family", "Text", "3"},
+            {"No_Bedrooms", "Text", "3"},
+            {"Sale_Rental", "Text", "50"},
+            {"Transfer_date", "Date/Time", "50"},
+            {"Landlord_Reg", "Yes/No", "50"},
+            {"Occupied", "Yes/No", "50"},
+            {"Tenitive_Insp_date", "Date/Time", "50"},
+            {"Received_By", "Text", "50"},
+            {"Received_Date", "Date/Time", "50"},
+            {"Payment_Type", "Text", "50"},
+            {"Type_Structure", "Text", "50"},
+            {"Mail_Report", "Yes/No", "50"},
+            {"Mail_To", "Text", "50"},
+            {"Mail_to2", "Text", "50"},
+            {"Mail_to3", "Text", "50"},
+            {"Mail_to4", "Text", "50"},
+            {"Insp_By", "Text", "50"},
+            {"Insp_Date", "Date/Time", "50"},
+            {"Reinsp_by", "Text", "50"},
+            {"Reinsp_date", "Date/Time", "50"},
+            {"Conservation", "Text", "50"},
+            {"Out_of_Town", "Yes/No", "50"},
+            {"IssuedDate", "Date/Time", "50"},
+            {"Conditional", "Yes/No", "50"},
+            {"Termite_insp_req", "Yes/No", "50"},
+            {"Termite_insp_Exp", "Memo", "50"},
+            {"Electric_insp", "Yes/No", "50"},
+            {"Electric_insp_Exp", "Memo", "50"},
+            {"PressRelief", "Yes/No", "50"},
+            {"PressRelief_exp", "Memo", "50"},
+            {"fire_door_Required", "Yes/No", "50"},
+            {"Fire_Door_Exp", "Memo", "50"},
+            {"Dummy_Circuit_Breakers", "Yes/No", "50"},
+            {"Dummy_Circuit_Exp", "Memo", "50"},
+            {"Backflow_circuit_Breakers", "Yes/No", "50"},
+            {"Backflow_Circuit_exp", "Memo", "50"},
+            {"GFCI_Garage_Outlet", "Yes/No", "50"},
+            {"GFCI_Garage_exp", "Memo", "50"},
+            {"GFCI_Kitchen_Outlet", "Yes/No", "50"},
+            {"GFCI_Kitchen_exp", "Memo", "50"},
+            {"GFCI_Slop_sink_outlet", "Yes/No", "50"},
+            {"GFCI_Slop_sink_exp", "Memo", "50"},
+            {"GFCI_Bathroom_outlet", "Yes/No", "50"},
+            {"GFCI_Bathroom_exp", "Memo", "50"},
+            {"GFCI_Basement_Outlet", "Yes/No", "50"},
+            {"GFCI_Basement_exp", "Memo", "50"},
+            {"GFCI_Outside_Outlets", "Yes/No", "50"},
+            {"GFCI_Outside_exp", "Memo", "50"},
+            {"Garage_Door_opener", "Yes/No", "50"},
+            {"Garage_Door_exp", "Memo", "50"},
+            {"Recement_Flue_pipe", "Yes/No", "50"},
+            {"Recement_Flue_exp", "Memo", "50"},
+            {"Metallic_dryer_hose", "Yes/No", "50"},
+            {"Metallic_dryer_exp", "Memo", "50"},
+            {"Front_Door_Thumb_lock", "Yes/No", "50"},
+            {"Front_Door_Thumb_exp", "Memo", "50"},
+            {"Back_Door_thumb_lock", "Yes/No", "50"},
+            {"Back_Door_Thumb_Exp", "Memo", "50"},
+            {"Debris_in_yard", "Yes/No", "50"},
+            {"Debris_Exp", "Memo", "50"},
+            {"Smoke_Detector_alllevels", "Yes/No", "50"},
+            {"Smoke_Alllevels_exp", "Memo", "50"},
+            {"Smoke_dectector_Crawl", "Yes/No", "50"},
+            {"Smoke_Crawl_exp", "Memo", "50"},
+            {"Smoke_Detector_attic", "Yes/No", "50"},
+            {"Smoke_attic_exp", "Memo", "50"},
+            {"Smoke_Detector_Bedroom", "Yes/No", "50"},
+            {"Smoke_bedroom_exp", "Memo", "50"},
+            {"this1", "Memo", "50"},
+            {"OpenItemsMain", "Number", "50"},
+            {"OPenItemsOther", "Number", "50"},
+            {"EmailAddress", "Text", "50"},
+            {"Flagged", "Yes/No", "50"},
+            {"GFCI_Powder", "Yes/No", "50"},
+            {"GFCI_Powder_Exp", "Memo", "50"},
+            {"GFCI_Protect_Shed", "Yes/No", "50"},
+            {"GFCI_Protect_Shed_Exp", "Memo", "50"},
+            {"Broken_Window", "Yes/No", "50"},
+            {"Broken_Window_Exp", "Memo", "50"},
+            {"INstall_BOCA", "Yes/No", "50"},
+            {"Install_Boca_Exp", "Memo", "50"},
+            {"Carbon_Mono", "Yes/No", "50"},
+            {"Carbon_Mono_exp", "Memo", "50"},
+            {"House_Number", "Yes/No", "50"},
+            {"House_Num_Exp", "Memo", "50"}
+            }
+
+        'If ExportAccess(comainFields, My.Settings.CONewDB, My.Settings.WorkDB, "CO_MAIN") <> 0 Then
+        'FormatProgressReport(0, "", "# CO Failed #")
+        'Return 1
+        'Exit Function
+        'End If
+
 
         ' Delete Null records (deleteCONull)
+        If RunAccessQuery("DELETE CO_MAIN.Co_number FROM CO_MAIN WHERE (((CO_MAIN.Co_number) Is Null));") <> 0 Then
+            FormatProgressReport(0, "", "# CO Failed #")
+            Return 1
+            Exit Function
+        End If
 
         ' Run CO query (coquery)
+        If RunAccessQuery("DROP TABLE CO") <> 0 Then
+            FormatProgressReport(0, "", "# Modiv Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        If RunAccessQuery("SELECT CO_Main.Co_number, CO_Main.BLOCK, CO_Main.LOT, CO_Main.No_Bedrooms, CO_Main.Transfer_date, CO_Main.Sale_Rental, CO_Main.Occupied, CO_Main.Insp_Date, CO_Main.IssuedDate, '32_'+CO_Main!block+'_'+CO_Main!lot AS PIN INTO CO FROM CO_Main;") <> 0 Then
+        FormatProgressReport(0, "", "# CO Failed #")
+            Return 1
+            Exit Function
+        End If
 
         ' Export
+        Dim coFields(,) As String =
+            {{"Co_number", "Text", "50"},
+            {"BLOCK", "Text", "15"},
+            {"LOT", "Text", "15"},
+            {"No_Bedrooms", "Text", "3"},
+            {"Transfer_date", "Date/Time", "50"},
+            {"Sale_Rental", "Text", "50"},
+            {"Occupied", "Yes/No", "50"},
+            {"Insp_Date", "Date/Time", "50"},
+            {"IssuedDate", "Date/Time", "50"},
+            {"PIN", "Text", "255"}
+            }
 
+        If ExportAccess(coFields, My.Settings.WorkDB, My.Settings.SendDB, "co") <> 0 Then
+            FormatProgressReport(0, "", "# CO Failed #")
+            Return 1
+            Exit Function
+        End If
         FormatProgressReport(0, "", "# CO Completed #", 32)
         Return 0
     End Function
 
     Private Function funSeptics() As Integer
         If My.Settings.SecSeptics = False Then
-            FormatProgressReport(0, "", "# Septics Skipped #")
+            FormatProgressReport(0, "", "# Septics Skipped #", 40)
             Return 0
             Exit Function
         End If
@@ -426,7 +681,7 @@ Public Class MaserMain
 
     Private Function funBco() As Integer
         If My.Settings.SecBCO = False Then
-            FormatProgressReport(0, "", "# BCO Skipped #")
+            FormatProgressReport(0, "", "# BCO Skipped #", 48)
             Return 0
             Exit Function
         End If
@@ -440,7 +695,7 @@ Public Class MaserMain
 
     Private Function funZba() As Integer
         If My.Settings.SecZBA = False Then
-            FormatProgressReport(0, "", "# ZBA Skipped #")
+            FormatProgressReport(0, "", "# ZBA Skipped #", 56)
             Return 0
             Exit Function
         End If
@@ -454,7 +709,7 @@ Public Class MaserMain
 
     Private Function funPla() As Integer
         If My.Settings.SecPLA = False Then
-            FormatProgressReport(0, "", "# PLA Skipped #")
+            FormatProgressReport(0, "", "# PLA Skipped #", 64)
             Return 0
             Exit Function
         End If
@@ -468,7 +723,7 @@ Public Class MaserMain
 
     Private Function funMac() As Integer
         If My.Settings.SecMac = False Then
-            FormatProgressReport(0, "", "# MAC Skipped #")
+            FormatProgressReport(0, "", "# MAC Skipped #", 72)
             Return 0
             Exit Function
         End If
@@ -482,7 +737,7 @@ Public Class MaserMain
 
     Private Function funCd() As Integer
         If My.Settings.SecCD = False Then
-            FormatProgressReport(0, "", "# CD Skipped #")
+            FormatProgressReport(0, "", "# CD Skipped #", 80)
             Return 0
             Exit Function
         End If
@@ -496,7 +751,7 @@ Public Class MaserMain
 
     Private Function funCpm() As Integer
         If My.Settings.SecCPM = False Then
-            FormatProgressReport(0, "", "# CPM Skipped #")
+            FormatProgressReport(0, "", "# CPM Skipped #", 88)
             Return 0
             Exit Function
         End If
@@ -510,7 +765,7 @@ Public Class MaserMain
 
     Private Function funFtg() As Integer
         If My.Settings.SecFTG = False Then
-            FormatProgressReport(0, "", "# FTG Skipped #")
+            FormatProgressReport(0, "", "# FTG Skipped #", 96)
             Return 0
             Exit Function
         End If
@@ -524,7 +779,7 @@ Public Class MaserMain
 
     Private Function funZone() As Integer
         If My.Settings.SecZone = False Then
-            FormatProgressReport(0, "", "# Zone Skipped #")
+            FormatProgressReport(0, "", "# Zone Skipped #", 100)
             Return 0
             Exit Function
         End If
@@ -752,6 +1007,84 @@ Public Class MaserMain
         FormatProgressReport(100, "", "Import of " + textFile + " Successful")
         Return 0
     End Function
+    Private Function ExportAccess(fieldArray(,) As String, fromDB As String, toDB As String, tableName As String) As Integer
+        Dim selectText As String = ""
+        Dim valueText As String = ""
+        Dim fieldText As String = ""
+        Dim insertText As String = ""
+
+        For i = 0 To fieldArray.GetLength(0) - 1
+            fieldText += fieldArray(i, 0).ToString + ","
+            valueText += "@" + fieldArray(i, 0).ToString + ","
+        Next
+
+        fieldText = fieldText.Trim().Remove(fieldText.Length - 1)
+        valueText = valueText.Trim().Remove(valueText.Length - 1)
+        selectText = "SELECT " + fieldText + " FROM " + tableName + ";"
+        insertText = "INSERT INTO " + tableName + " (" + fieldText + ") VALUES (" + valueText + ");"
+
+        FormatProgressReport(25, "Importing " + tableName, "Importing " + tableName + " from " + fromDB + " to " + toDB)
+
+        Try
+
+
+            Dim fromDBCon As New OleDb.OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fromDB)
+            Dim toDBCon As New OleDb.OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + toDB)
+
+            fromDBCon.Open()
+            toDBCon.Open()
+
+            'Create the data adapter with a SelectCommand using the first connection.
+            Dim da As New OleDb.OleDbDataAdapter(selectText, fromDBCon)
+
+            'Add the InsertCommand with the second connection.
+            da.InsertCommand = New OleDb.OleDbCommand(insertText, toDBCon)
+
+            'Add the insert parameters.
+            For i = 0 To fieldArray.GetLength(0) - 1
+                Select Case fieldArray(i, 1).ToString
+                    Case "Text"
+                        Dim fieldType As OleDb.OleDbType = OleDb.OleDbType.VarWChar
+                        da.InsertCommand.Parameters.Add("@" + fieldArray(i, 0).ToString, fieldType, Convert.ToInt32(fieldArray(i, 2)), fieldArray(i, 0).ToString)
+                    Case "Date/Time"
+                        Dim fieldType As OleDb.OleDbType = OleDb.OleDbType.Date
+                        da.InsertCommand.Parameters.Add("@" + fieldArray(i, 0).ToString, fieldType, Convert.ToInt32(fieldArray(i, 2)), fieldArray(i, 0).ToString)
+                    Case "Yes/No"
+                        Dim fieldType As OleDb.OleDbType = OleDb.OleDbType.Boolean
+                        da.InsertCommand.Parameters.Add("@" + fieldArray(i, 0).ToString, fieldType, Convert.ToInt32(fieldArray(i, 2)), fieldArray(i, 0).ToString)
+                    Case "Memo"
+                        Dim fieldType As OleDb.OleDbType = OleDb.OleDbType.LongVarWChar
+                        da.InsertCommand.Parameters.Add("@" + fieldArray(i, 0).ToString, fieldType, Convert.ToInt32(fieldArray(i, 2)), fieldArray(i, 0).ToString)
+                    Case "Number"
+                        Dim fieldType As OleDb.OleDbType = OleDb.OleDbType.Integer
+                        da.InsertCommand.Parameters.Add("@" + fieldArray(i, 0).ToString, fieldType, Convert.ToInt32(fieldArray(i, 2)), fieldArray(i, 0).ToString)
+                End Select
+            Next
+
+
+            'Keep the records ina state where they can be inserted into the destination table.
+            da.AcceptChangesDuringFill = False
+
+            Dim dt As New DataTable
+
+            'Get the data from the source database.
+            da.Fill(dt)
+
+            'Save the data to the destination database.
+            da.Update(dt)
+
+            toDBCon.Close()
+            fromDBCon.Close()
+
+        Catch ex As Exception
+            FormatProgressReport(100, "", ex.Message)
+            FormatProgressReport(100, "", "Import of " + tableName + " from " + fromDB + " to " + toDB + " Failed")
+            Return 1
+            Exit Function
+        End Try
+        FormatProgressReport(100, "Importing " + tableName, "Import of " + tableName + " from " + fromDB + " to " + toDB + " Successful")
+        Return 0
+    End Function
     Private Sub FormatProgressReport(taskPerc As Integer, taskStatus As String, consoleStatus As String, Optional overPerc As Integer = vbNull)
         If overPerc = vbNull Then
             Dim fullStatus As String = taskStatus + "|" + consoleStatus
@@ -760,5 +1093,9 @@ Public Class MaserMain
             Dim fullStatus As String = taskStatus + "|" + consoleStatus + "|" + overPerc.ToString
             bgwQueue.ReportProgress(taskPerc, fullStatus)
         End If
+    End Sub
+
+    Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
+        frmOptions.ShowDialog()
     End Sub
 End Class
