@@ -86,5 +86,17 @@
     <Setting Name="PlanningDB" Type="System.String" Scope="User">
       <Value Profile="(Default)">Y:\planning\planningdept.mdb</Value>
     </Setting>
+    <Setting Name="SendToFTP" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CompactDB" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TOWNSHIP_USERS\BALVEREZ</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Cowboys2019!</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

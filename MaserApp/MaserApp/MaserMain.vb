@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.FileIO
 
 Public Class MaserMain
     Dim taxa1332 As New maserTask(False, False)
+    Dim percMultiplier As Integer = 6
     Public Class ImportArguments
         Public _textfile As String
         Public _fieldarray As Array
@@ -28,6 +29,7 @@ Public Class MaserMain
 
         ' Run through the tasks
         e.Result = dataCollection()
+
 
 
     End Sub
@@ -199,11 +201,21 @@ Public Class MaserMain
             Exit Function
         End If
 
+        If (compactDatabase() <> 0) Then
+            Return 1
+            Exit Function
+        End If
+
+        If (sendToFtp() <> 0) Then
+            Return 1
+            Exit Function
+        End If
+
         Return 0
     End Function
     Private Function funTaxa1332() As Integer
         If My.Settings.SecTaxa1332 = False Then
-            FormatProgressReport(0, "", "#Taxa1332 Skipped #", 8)
+            FormatProgressReport(0, "", "#Taxa1332 Skipped #", 1 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -224,12 +236,12 @@ Public Class MaserMain
             Exit Function
         End If
 
-        FormatProgressReport(0, "", "# Taxa1332 Completed #", 8)
+        FormatProgressReport(0, "", "# Taxa1332 Completed #", 1 * percMultiplier)
         Return 0
     End Function
     Private Function funAcegis() As Integer
         If My.Settings.SecAcegis = False Then
-            FormatProgressReport(0, "", "# Acegis Skipped #", 16)
+            FormatProgressReport(0, "", "# Acegis Skipped #", 2 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -262,12 +274,12 @@ Public Class MaserMain
             Exit Function
         End If
 
-        FormatProgressReport(0, "", "# Acegis Completed #", 16)
+        FormatProgressReport(0, "", "# Acegis Completed #", 2 * percMultiplier)
         Return 0
     End Function
     Private Function funModiv() As Integer
         If My.Settings.SecModiv = False Then
-            FormatProgressReport(0, "", "# Modiv Skipped #", 24)
+            FormatProgressReport(0, "", "# Modiv Skipped #", 3 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -506,13 +518,13 @@ Public Class MaserMain
             Exit Function
         End If
 
-        FormatProgressReport(0, "", "# Modiv Completed #", 24)
+        FormatProgressReport(0, "", "# Modiv Completed #", 3 * percMultiplier)
         Return 0
     End Function
 
     Private Function funCo() As Integer
         If My.Settings.SecCo = False Then
-            FormatProgressReport(0, "", "# CO Skipped #", 32)
+            FormatProgressReport(0, "", "# CO Skipped #", 4 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -679,13 +691,13 @@ Public Class MaserMain
             Return 1
             Exit Function
         End If
-        FormatProgressReport(0, "", "# CO Completed #", 32)
+        FormatProgressReport(0, "", "# CO Completed #", 4 * percMultiplier)
         Return 0
     End Function
 
     Private Function funSeptics() As Integer
         If My.Settings.SecSeptics = False Then
-            FormatProgressReport(0, "", "# Septics Skipped #", 40)
+            FormatProgressReport(0, "", "# Septics Skipped #", 5 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -718,13 +730,13 @@ Public Class MaserMain
 
 
 
-        FormatProgressReport(0, "", "# Septics Completed #", 40)
+        FormatProgressReport(0, "", "# Septics Completed #", 5 * percMultiplier)
         Return 0
     End Function
 
     Private Function funBco() As Integer
         If My.Settings.SecBCO = False Then
-            FormatProgressReport(0, "", "# BCO Skipped #", 48)
+            FormatProgressReport(0, "", "# BCO Skipped #", 6 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -770,13 +782,13 @@ Public Class MaserMain
             Exit Function
         End If
 
-        FormatProgressReport(0, "", "# BCO Started #", 48)
+        FormatProgressReport(0, "", "# BCO Started #", 6 * percMultiplier)
         Return 0
     End Function
 
     Private Function funZba() As Integer
         If My.Settings.SecZBA = False Then
-            FormatProgressReport(0, "", "# ZBA Skipped #", 56)
+            FormatProgressReport(0, "", "# ZBA Skipped #", 7 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -846,13 +858,13 @@ Public Class MaserMain
             Exit Function
         End If
 
-        FormatProgressReport(0, "", "# ZBA Completed #", 56)
+        FormatProgressReport(0, "", "# ZBA Completed #", 7 * percMultiplier)
         Return 0
     End Function
 
     Private Function funPla() As Integer
         If My.Settings.SecPLA = False Then
-            FormatProgressReport(0, "", "# PLA Skipped #", 64)
+            FormatProgressReport(0, "", "# PLA Skipped #", 8 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -926,14 +938,14 @@ Public Class MaserMain
             Exit Function
         End If
 
-        FormatProgressReport(0, "", "# PLA Completed #", 64)
+        FormatProgressReport(0, "", "# PLA Completed #", 8 * percMultiplier)
         Return 0
     End Function
 
     Private Function funMac() As Integer
         ' Replaced by FTG No longer in use
         If My.Settings.SecMac = False Then
-            FormatProgressReport(0, "", "# MAC Skipped #", 72)
+            FormatProgressReport(0, "", "# MAC Skipped #", 9 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -941,13 +953,13 @@ Public Class MaserMain
 
         wait(1)
 
-        FormatProgressReport(0, "", "# MAC Completed #", 72)
+        FormatProgressReport(0, "", "# MAC Completed #", 9 * percMultiplier)
         Return 0
     End Function
 
     Private Function funCd() As Integer
         If My.Settings.SecCD = False Then
-            FormatProgressReport(0, "", "# CD Skipped #", 80)
+            FormatProgressReport(0, "", "# CD Skipped #", 10 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -1243,13 +1255,13 @@ Public Class MaserMain
             Exit Function
         End If
 
-        FormatProgressReport(0, "", "# CD Completed #", 80)
+        FormatProgressReport(0, "", "# CD Completed #", 10 * percMultiplier)
         Return 0
     End Function
 
     Private Function funCpm() As Integer
         If My.Settings.SecCPM = False Then
-            FormatProgressReport(0, "", "# CPM Skipped #", 88)
+            FormatProgressReport(0, "", "# CPM Skipped #", 11 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -1264,23 +1276,54 @@ Public Class MaserMain
             Exit Function
         End If
 
-        ' Run cpm query (cpmquery)
-        If RunAccessQuery("DELETE * FROM CPM") <> 0 Then
-            FormatProgressReport(0, "", "# CPM Failed #")
+        ' Run cpm query (cpmquery) ##### Inner Join #####
+        ' ###############################################
+        'If RunAccessQuery("DELETE * FROM CPM") <> 0 Then
+        'FormatProgressReport(0, "", "# CPM Failed #")
+        'Return 1
+        'Exit Function
+        'End If
+
+        ' Export to send
+        Dim cpmFields(,) As String =
+            {{"PERNO", "Number", "50"},
+            {"U_PERNO", "Text", "12"},
+            {"BLKNO", "Text", "10"},
+            {"LOTNO", "Text", "10"},
+            {"QUAL", "Text", "10"},
+            {"TRKDT", "Date/Time", "50"},
+            {"PERDT", "Date/Time", "50"},
+            {"CLOSE_DT", "Date/Time", "50"},
+            {"CERT_TYPE", "Text", "3"},
+            {"DESC", "Text", "255"},
+            {"SUBCODE", "Text", "1"},
+            {"INSP_DT", "Date/Time", "50"},
+            {"TYPE_INSP1", "Text", "30"},
+            {"RESULT", "Text", "1"},
+            {"TYPE_INSP2", "Text", "30"},
+            {"RESULT2", "Text", "1"},
+            {"TYPE_INSP3", "Text", "30"},
+            {"RESULT3", "Text", "1"},
+            {"INSPECTOR", "Text", "3"},
+            {"CO_DT", "Date/Time", "50"},
+            {"CCONO", "Number", "50"},
+            {"CCO_DT", "Date/Time", "50"},
+            {"PIN", "Text", "255"}
+            }
+        If ExportAccess(cpmFields, My.Settings.WorkDB, My.Settings.SendDB, "CPM") <> 0 Then
+            FormatProgressReport(0, "", "# CD Failed #")
             Return 1
             Exit Function
         End If
 
-        ' Export to send
-
-        FormatProgressReport(0, "", "# CPM Completed #", 88)
+        FormatProgressReport(0, "", "# CPM Completed #", 11 * percMultiplier)
         Return 0
     End Function
 
     Private Function funFtg() As Integer
         ' Not in use
         If My.Settings.SecFTG = False Then
-            FormatProgressReport(0, "", "# FTG Skipped #", 96)
+            FormatProgressReport(0, "", "# FTG Skipped #", 12 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -1288,13 +1331,13 @@ Public Class MaserMain
 
         wait(1)
 
-        FormatProgressReport(0, "", "# FTG Completed #", 96)
+        FormatProgressReport(0, "", "# FTG Completed #", 12 * percMultiplier)
         Return 0
     End Function
 
     Private Function funZone() As Integer
         If My.Settings.SecZone = False Then
-            FormatProgressReport(0, "", "# Zone Skipped #", 100)
+            FormatProgressReport(0, "", "# Zone Skipped #", 13 * percMultiplier)
             Return 0
             Exit Function
         End If
@@ -1302,7 +1345,62 @@ Public Class MaserMain
 
         wait(1)
 
-        FormatProgressReport(0, "", "# Zone Completed #", 100)
+        ' Run Zone query (SharepointZone)
+        Dim zoningApplicationFields(,) As String =
+            {{"PIN", "Text", "255"},
+            {"Block", "Text", "255"},
+            {"Lot", "Text", "255"},
+            {"Application Date", "Date/Time", "255"},
+            {"Date Of Review", "Date/Time", "255"},
+            {"Status", "Text", "255"},
+            {"Zone", "Text", "255"},
+            {"Proposed Development", "Text", "255"},
+            {"Comments", "Text", "255"}
+            }
+
+        If ExportAccess(zoningApplicationFields, "http://mtsharepoint2:14871/sites/Middletown/zoning/;LIST={2C161244-978B-4FB6-8BF3-4300171BEE07}", My.Settings.WorkDB, "Zoning Applications", "Sharepoint", "", "NewZone") <> 0 Then
+            FormatProgressReport(0, "", "# Zone Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Run Query (PrimeZone)
+        If RunAccessQuery("DROP TABLE TempZone") <> 0 Then
+            FormatProgressReport(0, "", "# Zone Failed #")
+
+        End If
+        If RunAccessQuery("SELECT [PIN], [BLOCK], [LOT], [Application Date], [DATE OF REVIEW], [Status], [Zone], [Proposed Development], [Comments] INTO [TempZone] FROM [zone];") <> 0 Then
+            FormatProgressReport(0, "", "# Zone Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Run Query (AppendZone)
+        If RunAccessQuery("INSERT INTO TempZone SELECT NewZone.* FROM NewZone;") <> 0 Then
+            FormatProgressReport(0, "", "# Zone Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Export to Send (tempzone to zone)
+        Dim tempzoneFields(,) As String =
+            {{"PIN", "Text", "255"},
+            {"BLOCK", "Text", "255"},
+            {"LOT", "Text", "255"},
+            {"Application Date", "Text", "255"},
+            {"DATE OF REVIEW", "Text", "255"},
+            {"Status", "Text", "255"},
+            {"Zone", "Text", "255"},
+            {"Proposed Development", "Text", "255"},
+            {"Comments", "Text", "255"}
+            }
+        If ExportAccess(tempzoneFields, My.Settings.WorkDB, My.Settings.SendDB, "TempZone", "Access", "", "zone") <> 0 Then
+            FormatProgressReport(0, "", "# Zone Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        FormatProgressReport(0, "", "# Zone Completed #", 13 * percMultiplier)
         Return 0
     End Function
     Private Function RunAccessQuery(sqlCmd As String) As Integer
@@ -1536,7 +1634,7 @@ Public Class MaserMain
         FormatProgressReport(100, "", "Import of " + textFile + " Successful")
         Return 0
     End Function
-    Private Function ExportAccess(fieldArray(,) As String, fromDB As String, toDB As String, tableName As String, Optional connectionType As String = "Access", Optional selectOveride As String = "") As Integer
+    Private Function ExportAccess(fieldArray(,) As String, fromDB As String, toDB As String, fromTableName As String, Optional connectionType As String = "Access", Optional selectOveride As String = "", Optional toTableName As String = "") As Integer
         Dim selectText As String = ""
         Dim valueText As String = ""
         Dim fieldText As String = ""
@@ -1549,10 +1647,13 @@ Public Class MaserMain
 
         fieldText = fieldText.Trim().Remove(fieldText.Length - 1)
         valueText = valueText.Trim().Remove(valueText.Length - 1)
-        selectText = "SELECT " + fieldText + " FROM " + tableName + ";"
-        insertText = "INSERT INTO " + tableName + " (" + fieldText + ") VALUES (" + valueText + ");"
+        selectText = "SELECT " + fieldText + " FROM [" + fromTableName + "];"
+        If toTableName = "" Then
+            toTableName = fromTableName
+        End If
+        insertText = "INSERT INTO [" + toTableName + "] (" + fieldText + ") VALUES (" + valueText + ");"
 
-        FormatProgressReport(25, "Importing " + tableName, "Importing " + tableName + " from " + fromDB + " to " + toDB)
+        FormatProgressReport(25, "Importing " + fromTableName, "Importing " + fromTableName + " from " + fromDB + " to " + toDB)
 
         Try
             Dim fromConString As String = ""
@@ -1618,13 +1719,13 @@ Public Class MaserMain
 
         Catch ex As Exception
             FormatProgressReport(100, "", ex.Message)
-            FormatProgressReport(100, "", "Import of " + tableName + " from " + fromDB + " to " + toDB + " Failed")
+            FormatProgressReport(100, "", "Import of " + fromTableName + " from " + fromDB + " to " + toDB + " Failed")
             FormatProgressReport(100, "", "Select Query:" + selectText)
             FormatProgressReport(100, "", "Insert Query:" + insertText)
             Return 1
             Exit Function
         End Try
-        FormatProgressReport(100, "Importing " + tableName, "Import of " + tableName + " from " + fromDB + " to " + toDB + " Successful")
+        FormatProgressReport(100, "Importing " + fromTableName, "Import of " + fromTableName + " from " + fromDB + " to " + toDB + " Successful")
         Return 0
     End Function
     Private Sub FormatProgressReport(taskPerc As Integer, taskStatus As String, consoleStatus As String, Optional overPerc As Integer = vbNull)
@@ -1636,7 +1737,28 @@ Public Class MaserMain
             bgwQueue.ReportProgress(taskPerc, fullStatus)
         End If
     End Sub
+    Private Function compactDatabase() As Integer
+        ' #TODO
+        If My.Settings.CompactDB = False Then
+            FormatProgressReport(0, "", "# Compact Database Skipped #", 14 * percMultiplier)
+            Return 0
+            Exit Function
+        End If
 
+        FormatProgressReport(0, "", "# Compact Database Completed #", 14 * percMultiplier)
+        Return 0
+    End Function
+    Private Function sendToFtp() As Integer
+        ' #TODO
+        If My.Settings.SendToFTP = False Then
+            FormatProgressReport(0, "", "# Send to FTP Skipped #", 15 * percMultiplier)
+            Return 0
+            Exit Function
+        End If
+
+        FormatProgressReport(0, "", "# Send to FTP Completed #", 15 * percMultiplier)
+        Return 0
+    End Function
     Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
         frmOptions.ShowDialog()
     End Sub

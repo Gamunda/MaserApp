@@ -40,7 +40,12 @@ Partial Class frmOptions
         Me.btnChooseWorkDB = New System.Windows.Forms.Button()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.btnChoosePlanning = New System.Windows.Forms.Button()
-        Me.ofdPlanningDB = New System.Windows.Forms.OpenFileDialog()
+        Me.lblUserName = New System.Windows.Forms.Label()
+        Me.lblPwd = New System.Windows.Forms.Label()
+        Me.txbUserName = New System.Windows.Forms.TextBox()
+        Me.txbPassword = New System.Windows.Forms.TextBox()
+        Me.cbCompactDB = New System.Windows.Forms.CheckBox()
+        Me.cbSendToFTP = New System.Windows.Forms.CheckBox()
         Me.txbPlanningDB = New System.Windows.Forms.TextBox()
         Me.txbWorkDB = New System.Windows.Forms.TextBox()
         Me.txbCODB = New System.Windows.Forms.TextBox()
@@ -69,6 +74,7 @@ Partial Class frmOptions
         Me.tbxTaxa1332User = New System.Windows.Forms.TextBox()
         Me.tbxTaxa1332FTP = New System.Windows.Forms.TextBox()
         Me.txbWorkDir = New System.Windows.Forms.TextBox()
+        Me.ofdPlanningDB = New System.Windows.Forms.OpenFileDialog()
         Me.ofdWorkDB = New System.Windows.Forms.OpenFileDialog()
         Me.fbdWorkDir = New System.Windows.Forms.FolderBrowserDialog()
         Me.ofdCODB = New System.Windows.Forms.OpenFileDialog()
@@ -99,7 +105,7 @@ Partial Class frmOptions
         '
         Me.lblUnzip.AutoSize = True
         Me.lblUnzip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUnzip.Location = New System.Drawing.Point(643, 245)
+        Me.lblUnzip.Location = New System.Drawing.Point(643, 261)
         Me.lblUnzip.Name = "lblUnzip"
         Me.lblUnzip.Size = New System.Drawing.Size(84, 13)
         Me.lblUnzip.TabIndex = 73
@@ -109,7 +115,7 @@ Partial Class frmOptions
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(521, 245)
+        Me.Label6.Location = New System.Drawing.Point(521, 261)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(61, 13)
         Me.Label6.TabIndex = 57
@@ -119,7 +125,7 @@ Partial Class frmOptions
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(397, 245)
+        Me.Label5.Location = New System.Drawing.Point(397, 261)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(33, 13)
         Me.Label5.TabIndex = 56
@@ -129,7 +135,7 @@ Partial Class frmOptions
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(277, 244)
+        Me.Label4.Location = New System.Drawing.Point(277, 260)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(30, 13)
         Me.Label4.TabIndex = 55
@@ -139,7 +145,7 @@ Partial Class frmOptions
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(150, 245)
+        Me.Label3.Location = New System.Drawing.Point(150, 261)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(59, 13)
         Me.Label3.TabIndex = 54
@@ -149,7 +155,7 @@ Partial Class frmOptions
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(101, 291)
+        Me.Label2.Location = New System.Drawing.Point(101, 307)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(45, 13)
         Me.Label2.TabIndex = 53
@@ -159,7 +165,7 @@ Partial Class frmOptions
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(82, 265)
+        Me.Label1.Location = New System.Drawing.Point(82, 281)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(63, 13)
         Me.Label1.TabIndex = 52
@@ -255,10 +261,72 @@ Partial Class frmOptions
         Me.btnChoosePlanning.Text = "Choose DB"
         Me.btnChoosePlanning.UseVisualStyleBackColor = True
         '
-        'ofdPlanningDB
+        'lblUserName
         '
-        Me.ofdPlanningDB.FileName = Global.MaserApp.My.MySettings.Default.PlanningDB
-        Me.ofdPlanningDB.InitialDirectory = Global.MaserApp.My.MySettings.Default.PlanningDB
+        Me.lblUserName.AutoSize = True
+        Me.lblUserName.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUserName.Location = New System.Drawing.Point(80, 205)
+        Me.lblUserName.Name = "lblUserName"
+        Me.lblUserName.Size = New System.Drawing.Size(65, 13)
+        Me.lblUserName.TabIndex = 86
+        Me.lblUserName.Text = "UserName"
+        '
+        'lblPwd
+        '
+        Me.lblPwd.AutoSize = True
+        Me.lblPwd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPwd.Location = New System.Drawing.Point(85, 231)
+        Me.lblPwd.Name = "lblPwd"
+        Me.lblPwd.Size = New System.Drawing.Size(61, 13)
+        Me.lblPwd.TabIndex = 87
+        Me.lblPwd.Text = "Password"
+        '
+        'txbUserName
+        '
+        Me.txbUserName.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "UserName", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txbUserName.Location = New System.Drawing.Point(151, 202)
+        Me.txbUserName.Name = "txbUserName"
+        Me.txbUserName.Size = New System.Drawing.Size(420, 20)
+        Me.txbUserName.TabIndex = 88
+        Me.txbUserName.Text = Global.MaserApp.My.MySettings.Default.UserName
+        '
+        'txbPassword
+        '
+        Me.txbPassword.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "Password", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txbPassword.Location = New System.Drawing.Point(151, 228)
+        Me.txbPassword.Name = "txbPassword"
+        Me.txbPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txbPassword.Size = New System.Drawing.Size(420, 20)
+        Me.txbPassword.TabIndex = 89
+        Me.txbPassword.Text = Global.MaserApp.My.MySettings.Default.Password
+        '
+        'cbCompactDB
+        '
+        Me.cbCompactDB.AutoSize = True
+        Me.cbCompactDB.Checked = Global.MaserApp.My.MySettings.Default.CompactDB
+        Me.cbCompactDB.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbCompactDB.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "CompactDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.cbCompactDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbCompactDB.Location = New System.Drawing.Point(615, 419)
+        Me.cbCompactDB.Name = "cbCompactDB"
+        Me.cbCompactDB.Size = New System.Drawing.Size(103, 17)
+        Me.cbCompactDB.TabIndex = 90
+        Me.cbCompactDB.Text = "Compact DB?"
+        Me.cbCompactDB.UseVisualStyleBackColor = True
+        '
+        'cbSendToFTP
+        '
+        Me.cbSendToFTP.AutoSize = True
+        Me.cbSendToFTP.Checked = Global.MaserApp.My.MySettings.Default.SendToFTP
+        Me.cbSendToFTP.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbSendToFTP.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SendToFTP", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.cbSendToFTP.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbSendToFTP.Location = New System.Drawing.Point(724, 419)
+        Me.cbSendToFTP.Name = "cbSendToFTP"
+        Me.cbSendToFTP.Size = New System.Drawing.Size(104, 17)
+        Me.cbSendToFTP.TabIndex = 91
+        Me.cbSendToFTP.Text = "Send to FTP?"
+        Me.cbSendToFTP.UseVisualStyleBackColor = True
         '
         'txbPlanningDB
         '
@@ -304,7 +372,7 @@ Partial Class frmOptions
         '
         Me.txbAcegisUnzip.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "AcegisUnzipFile", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txbAcegisUnzip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbAcegisUnzip.Location = New System.Drawing.Point(646, 288)
+        Me.txbAcegisUnzip.Location = New System.Drawing.Point(646, 304)
         Me.txbAcegisUnzip.Name = "txbAcegisUnzip"
         Me.txbAcegisUnzip.Size = New System.Drawing.Size(116, 20)
         Me.txbAcegisUnzip.TabIndex = 72
@@ -314,7 +382,7 @@ Partial Class frmOptions
         '
         Me.txbTaxa1332Unzip.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "Taxa1332UnzipFile", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txbTaxa1332Unzip.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbTaxa1332Unzip.Location = New System.Drawing.Point(646, 262)
+        Me.txbTaxa1332Unzip.Location = New System.Drawing.Point(646, 278)
         Me.txbTaxa1332Unzip.Name = "txbTaxa1332Unzip"
         Me.txbTaxa1332Unzip.Size = New System.Drawing.Size(116, 20)
         Me.txbTaxa1332Unzip.TabIndex = 71
@@ -326,7 +394,7 @@ Partial Class frmOptions
         Me.cbZone.Checked = Global.MaserApp.My.MySettings.Default.SecZone
         Me.cbZone.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbZone.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecZone", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbZone.Location = New System.Drawing.Point(387, 363)
+        Me.cbZone.Location = New System.Drawing.Point(387, 379)
         Me.cbZone.Name = "cbZone"
         Me.cbZone.Size = New System.Drawing.Size(49, 17)
         Me.cbZone.TabIndex = 70
@@ -338,7 +406,7 @@ Partial Class frmOptions
         Me.cbFTG.AutoSize = True
         Me.cbFTG.Checked = Global.MaserApp.My.MySettings.Default.SecFTG
         Me.cbFTG.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecFTG", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbFTG.Location = New System.Drawing.Point(303, 363)
+        Me.cbFTG.Location = New System.Drawing.Point(303, 379)
         Me.cbFTG.Name = "cbFTG"
         Me.cbFTG.Size = New System.Drawing.Size(47, 17)
         Me.cbFTG.TabIndex = 69
@@ -351,7 +419,7 @@ Partial Class frmOptions
         Me.cbCPM.Checked = Global.MaserApp.My.MySettings.Default.SecCPM
         Me.cbCPM.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbCPM.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecCPM", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbCPM.Location = New System.Drawing.Point(200, 363)
+        Me.cbCPM.Location = New System.Drawing.Point(200, 379)
         Me.cbCPM.Name = "cbCPM"
         Me.cbCPM.Size = New System.Drawing.Size(49, 17)
         Me.cbCPM.TabIndex = 68
@@ -364,7 +432,7 @@ Partial Class frmOptions
         Me.cbCD.Checked = Global.MaserApp.My.MySettings.Default.SecCD
         Me.cbCD.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbCD.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecCD", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbCD.Location = New System.Drawing.Point(104, 363)
+        Me.cbCD.Location = New System.Drawing.Point(104, 379)
         Me.cbCD.Name = "cbCD"
         Me.cbCD.Size = New System.Drawing.Size(41, 17)
         Me.cbCD.TabIndex = 67
@@ -376,7 +444,7 @@ Partial Class frmOptions
         Me.cbMAC.AutoSize = True
         Me.cbMAC.Checked = Global.MaserApp.My.MySettings.Default.SecMac
         Me.cbMAC.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecMac", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbMAC.Location = New System.Drawing.Point(635, 340)
+        Me.cbMAC.Location = New System.Drawing.Point(635, 356)
         Me.cbMAC.Name = "cbMAC"
         Me.cbMAC.Size = New System.Drawing.Size(49, 17)
         Me.cbMAC.TabIndex = 66
@@ -389,7 +457,7 @@ Partial Class frmOptions
         Me.cbPLA.Checked = Global.MaserApp.My.MySettings.Default.SecPLA
         Me.cbPLA.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbPLA.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecPLA", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbPLA.Location = New System.Drawing.Point(558, 363)
+        Me.cbPLA.Location = New System.Drawing.Point(558, 379)
         Me.cbPLA.Name = "cbPLA"
         Me.cbPLA.Size = New System.Drawing.Size(46, 17)
         Me.cbPLA.TabIndex = 65
@@ -402,7 +470,7 @@ Partial Class frmOptions
         Me.cbZBA.Checked = Global.MaserApp.My.MySettings.Default.SecZBA
         Me.cbZBA.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbZBA.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecZBA", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbZBA.Location = New System.Drawing.Point(558, 340)
+        Me.cbZBA.Location = New System.Drawing.Point(558, 356)
         Me.cbZBA.Name = "cbZBA"
         Me.cbZBA.Size = New System.Drawing.Size(47, 17)
         Me.cbZBA.TabIndex = 64
@@ -415,7 +483,7 @@ Partial Class frmOptions
         Me.cbBCO.Checked = Global.MaserApp.My.MySettings.Default.SecBCO
         Me.cbBCO.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbBCO.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecBCO", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbBCO.Location = New System.Drawing.Point(446, 363)
+        Me.cbBCO.Location = New System.Drawing.Point(446, 379)
         Me.cbBCO.Name = "cbBCO"
         Me.cbBCO.Size = New System.Drawing.Size(48, 17)
         Me.cbBCO.TabIndex = 63
@@ -428,7 +496,7 @@ Partial Class frmOptions
         Me.cbSeptics.Checked = Global.MaserApp.My.MySettings.Default.SecSeptics
         Me.cbSeptics.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbSeptics.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecSeptics", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbSeptics.Location = New System.Drawing.Point(446, 340)
+        Me.cbSeptics.Location = New System.Drawing.Point(446, 356)
         Me.cbSeptics.Name = "cbSeptics"
         Me.cbSeptics.Size = New System.Drawing.Size(59, 17)
         Me.cbSeptics.TabIndex = 62
@@ -440,7 +508,7 @@ Partial Class frmOptions
         Me.cbCO.AutoSize = True
         Me.cbCO.Checked = Global.MaserApp.My.MySettings.Default.SecCo
         Me.cbCO.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecCo", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbCO.Location = New System.Drawing.Point(387, 340)
+        Me.cbCO.Location = New System.Drawing.Point(387, 356)
         Me.cbCO.Name = "cbCO"
         Me.cbCO.Size = New System.Drawing.Size(41, 17)
         Me.cbCO.TabIndex = 61
@@ -453,7 +521,7 @@ Partial Class frmOptions
         Me.cbModiv.Checked = Global.MaserApp.My.MySettings.Default.SecModiv
         Me.cbModiv.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbModiv.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecModiv", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbModiv.Location = New System.Drawing.Point(303, 340)
+        Me.cbModiv.Location = New System.Drawing.Point(303, 356)
         Me.cbModiv.Name = "cbModiv"
         Me.cbModiv.Size = New System.Drawing.Size(54, 17)
         Me.cbModiv.TabIndex = 60
@@ -465,7 +533,7 @@ Partial Class frmOptions
         Me.cbAcegis.AutoSize = True
         Me.cbAcegis.Checked = Global.MaserApp.My.MySettings.Default.SecAcegis
         Me.cbAcegis.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecAcegis", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbAcegis.Location = New System.Drawing.Point(200, 340)
+        Me.cbAcegis.Location = New System.Drawing.Point(200, 356)
         Me.cbAcegis.Name = "cbAcegis"
         Me.cbAcegis.Size = New System.Drawing.Size(57, 17)
         Me.cbAcegis.TabIndex = 59
@@ -477,7 +545,7 @@ Partial Class frmOptions
         Me.cbTaxa1332.AutoSize = True
         Me.cbTaxa1332.Checked = Global.MaserApp.My.MySettings.Default.SecTaxa1332
         Me.cbTaxa1332.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecTaxa1332", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.cbTaxa1332.Location = New System.Drawing.Point(104, 340)
+        Me.cbTaxa1332.Location = New System.Drawing.Point(104, 356)
         Me.cbTaxa1332.Name = "cbTaxa1332"
         Me.cbTaxa1332.Size = New System.Drawing.Size(70, 17)
         Me.cbTaxa1332.TabIndex = 58
@@ -488,7 +556,7 @@ Partial Class frmOptions
         '
         Me.tbxAcegisFile.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "AcegisFile", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxAcegisFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxAcegisFile.Location = New System.Drawing.Point(153, 288)
+        Me.tbxAcegisFile.Location = New System.Drawing.Point(153, 304)
         Me.tbxAcegisFile.Name = "tbxAcegisFile"
         Me.tbxAcegisFile.Size = New System.Drawing.Size(116, 20)
         Me.tbxAcegisFile.TabIndex = 51
@@ -498,7 +566,7 @@ Partial Class frmOptions
         '
         Me.tbxTaxa1332File.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "Taxa1332File", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxTaxa1332File.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxTaxa1332File.Location = New System.Drawing.Point(153, 261)
+        Me.tbxTaxa1332File.Location = New System.Drawing.Point(153, 277)
         Me.tbxTaxa1332File.Name = "tbxTaxa1332File"
         Me.tbxTaxa1332File.Size = New System.Drawing.Size(116, 20)
         Me.tbxTaxa1332File.TabIndex = 50
@@ -508,7 +576,7 @@ Partial Class frmOptions
         '
         Me.tbxAcegisPwd.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "AcegisPwd", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxAcegisPwd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxAcegisPwd.Location = New System.Drawing.Point(524, 288)
+        Me.tbxAcegisPwd.Location = New System.Drawing.Point(524, 304)
         Me.tbxAcegisPwd.Name = "tbxAcegisPwd"
         Me.tbxAcegisPwd.Size = New System.Drawing.Size(116, 20)
         Me.tbxAcegisPwd.TabIndex = 49
@@ -518,7 +586,7 @@ Partial Class frmOptions
         '
         Me.tbxAcegisUser.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "AcegisUser", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxAcegisUser.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxAcegisUser.Location = New System.Drawing.Point(400, 288)
+        Me.tbxAcegisUser.Location = New System.Drawing.Point(400, 304)
         Me.tbxAcegisUser.Name = "tbxAcegisUser"
         Me.tbxAcegisUser.Size = New System.Drawing.Size(116, 20)
         Me.tbxAcegisUser.TabIndex = 48
@@ -528,7 +596,7 @@ Partial Class frmOptions
         '
         Me.tbxAcegisFTP.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "AcegisFTP", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxAcegisFTP.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxAcegisFTP.Location = New System.Drawing.Point(277, 288)
+        Me.tbxAcegisFTP.Location = New System.Drawing.Point(277, 304)
         Me.tbxAcegisFTP.Name = "tbxAcegisFTP"
         Me.tbxAcegisFTP.Size = New System.Drawing.Size(116, 20)
         Me.tbxAcegisFTP.TabIndex = 47
@@ -538,7 +606,7 @@ Partial Class frmOptions
         '
         Me.tbxTaxa1332Pwd.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "Taxa1332Pwd", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxTaxa1332Pwd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxTaxa1332Pwd.Location = New System.Drawing.Point(524, 262)
+        Me.tbxTaxa1332Pwd.Location = New System.Drawing.Point(524, 278)
         Me.tbxTaxa1332Pwd.Name = "tbxTaxa1332Pwd"
         Me.tbxTaxa1332Pwd.Size = New System.Drawing.Size(116, 20)
         Me.tbxTaxa1332Pwd.TabIndex = 46
@@ -548,7 +616,7 @@ Partial Class frmOptions
         '
         Me.tbxTaxa1332User.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "Taxa1332User", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxTaxa1332User.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxTaxa1332User.Location = New System.Drawing.Point(400, 262)
+        Me.tbxTaxa1332User.Location = New System.Drawing.Point(400, 278)
         Me.tbxTaxa1332User.Name = "tbxTaxa1332User"
         Me.tbxTaxa1332User.Size = New System.Drawing.Size(116, 20)
         Me.tbxTaxa1332User.TabIndex = 45
@@ -558,7 +626,7 @@ Partial Class frmOptions
         '
         Me.tbxTaxa1332FTP.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "Taxa1332FTP", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.tbxTaxa1332FTP.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tbxTaxa1332FTP.Location = New System.Drawing.Point(277, 262)
+        Me.tbxTaxa1332FTP.Location = New System.Drawing.Point(277, 278)
         Me.tbxTaxa1332FTP.Name = "tbxTaxa1332FTP"
         Me.tbxTaxa1332FTP.Size = New System.Drawing.Size(116, 20)
         Me.tbxTaxa1332FTP.TabIndex = 44
@@ -573,6 +641,11 @@ Partial Class frmOptions
         Me.txbWorkDir.Size = New System.Drawing.Size(418, 20)
         Me.txbWorkDir.TabIndex = 41
         Me.txbWorkDir.Text = Global.MaserApp.My.MySettings.Default.WorkDir
+        '
+        'ofdPlanningDB
+        '
+        Me.ofdPlanningDB.FileName = Global.MaserApp.My.MySettings.Default.PlanningDB
+        Me.ofdPlanningDB.InitialDirectory = Global.MaserApp.My.MySettings.Default.PlanningDB
         '
         'ofdWorkDB
         '
@@ -599,6 +672,12 @@ Partial Class frmOptions
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(933, 450)
         Me.ControlBox = False
+        Me.Controls.Add(Me.cbSendToFTP)
+        Me.Controls.Add(Me.cbCompactDB)
+        Me.Controls.Add(Me.txbPassword)
+        Me.Controls.Add(Me.txbUserName)
+        Me.Controls.Add(Me.lblPwd)
+        Me.Controls.Add(Me.lblUserName)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.txbPlanningDB)
         Me.Controls.Add(Me.btnChoosePlanning)
@@ -704,4 +783,10 @@ Partial Class frmOptions
     Friend WithEvents txbPlanningDB As TextBox
     Friend WithEvents btnChoosePlanning As Button
     Friend WithEvents ofdPlanningDB As OpenFileDialog
+    Friend WithEvents lblUserName As Label
+    Friend WithEvents lblPwd As Label
+    Friend WithEvents txbUserName As TextBox
+    Friend WithEvents txbPassword As TextBox
+    Friend WithEvents cbCompactDB As CheckBox
+    Friend WithEvents cbSendToFTP As CheckBox
 End Class
