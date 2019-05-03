@@ -667,7 +667,7 @@ Public Class MaserMain
         End If
 
         If RunAccessQuery("SELECT CO_Main.Co_number, CO_Main.BLOCK, CO_Main.LOT, CO_Main.No_Bedrooms, CO_Main.Transfer_date, CO_Main.Sale_Rental, CO_Main.Occupied, CO_Main.Insp_Date, CO_Main.IssuedDate, '32_'+CO_Main!block+'_'+CO_Main!lot AS PIN INTO CO FROM CO_Main;") <> 0 Then
-        FormatProgressReport(0, "", "# CO Failed #")
+            FormatProgressReport(0, "", "# CO Failed #")
             Return 1
             Exit Function
         End If
@@ -1278,11 +1278,38 @@ Public Class MaserMain
 
         ' Run cpm query (cpmquery) ##### Inner Join #####
         ' ###############################################
-        'If RunAccessQuery("DELETE * FROM CPM") <> 0 Then
-        'FormatProgressReport(0, "", "# CPM Failed #")
-        'Return 1
-        'Exit Function
-        'End If
+        ' #TODO
+        Dim cpmqueryFields(,) As String =
+            {{"PERNO", "Number", "50"},
+            {"U_PERNO", "Text", "12"},
+            {"BLKNO", "Text", "10"},
+            {"LOTNO", "Text", "10"},
+            {"QUAL", "Text", "10"},
+            {"TRKDT", "Date/Time", "50"},
+            {"PERDT", "Date/Time", "50"},
+            {"CLOSE_DT", "Date/Time", "50"},
+            {"CERT_TYPE", "Text", "3"},
+            {"DESC", "Text", "255"},
+            {"SUBCODE", "Text", "1"},
+            {"INSP_DT", "Date/Time", "50"},
+            {"TYPE_INSP1", "Text", "30"},
+            {"RESULT", "Text", "1"},
+            {"TYPE_INSP2", "Text", "30"},
+            {"RESULT2", "Text", "1"},
+            {"TYPE_INSP3", "Text", "30"},
+            {"RESULT3", "Text", "1"},
+            {"INSPECTOR", "Text", "3"},
+            {"CO_DT", "Date/Time", "50"},
+            {"CCONO", "Number", "50"},
+            {"CCO_DT", "Date/Time", "50"},
+            {"PIN", "Text", "255"}
+            }
+        Dim cpmSelectQuery As String = "SELECT dbo.T44_Applications.[PERNO], dbo.T44_Applications.[U_PERNO], dbo.T44_Applications.[BLKNO], dbo.T44_Applications.[LOTNO], dbo.T44_Applications.[QUAL], dbo.T44_Applications.[TRKDT], dbo.T44_Applications.[PERDT], dbo.T44_Applications.[CLOSE_DT], dbo.T44_Applications.[CERT_TYPE], dbo.T44_Applications.[DESC], dbo.T24_Inspections.[SUBCODE], dbo.T24_Inspections.[INSP_DT], dbo.T24_Inspections.[TYPE_INSP1], dbo.T24_Inspections.[RESULT], dbo.T24_Inspections.[TYPE_INSP2], dbo.T24_Inspections.[RESULT2], dbo.T24_Inspections.[TYPE_INSP3], dbo.T24_Inspections.[RESULT3], dbo.T24_Inspections.[INSPECTOR], dbo.T44_Applications.[CO_DT], dbo.T44_Applications.[CCONO], dbo.T44_Applications.[CCO_DT], '32_'+dbo.T44_APPLICATIONS.[Blkno]+'_'+dbo.T44_APPLICATIONS.[lotno] AS PIN FROM dbo.T44_Applications INNER JOIN dbo.T24_Inspections ON dbo.T44_Applications.[PERNO] = dbo.T24_Inspections.[PERNO] WHERE (((dbo.T44_Applications.[PERDT])>'2006-03-31') AND ((dbo.T44_Applications.[UPSUF])=0));"
+        If ExportAccess(cpmqueryFields, "APPSERVER3\CPM", My.Settings.WorkDB, "CPM", "DSN", cpmSelectQuery, "CPM") <> 0 Then
+            FormatProgressReport(0, "", "# CPM Failed #")
+            Return 1
+            Exit Function
+        End If
 
         ' Export to send
         Dim cpmFields(,) As String =
@@ -1459,8 +1486,8 @@ Public Class MaserMain
             output = System.IO.File.Create(OutputFilePath)
             bytesIn = 1
 
-            Do Until bytesIn < 1
-                bytesIn = stream.Read(buffer, 0, 1024)
+            Do Until bytesIn <1
+                                 bytesIn= stream.Read(buffer, 0, 1024)
                 If bytesIn > 0 Then
                     output.Write(buffer, 0, bytesIn)
                     TotalBytesIn += bytesIn
@@ -1647,7 +1674,12 @@ Public Class MaserMain
 
         fieldText = fieldText.Trim().Remove(fieldText.Length - 1)
         valueText = valueText.Trim().Remove(valueText.Length - 1)
-        selectText = "SELECT " + fieldText + " FROM [" + fromTableName + "];"
+        If selectOveride = "" Then
+            selectText = "SELECT " + fieldText + " FROM [" + fromTableName + "];"
+        Else
+            selectText = selectOveride
+        End If
+
         If toTableName = "" Then
             toTableName = fromTableName
         End If
@@ -1663,7 +1695,8 @@ Public Class MaserMain
                 Case "Sharepoint"
                     fromConString = "Provider=Microsoft.ACE.OLEDB.12.0;WSS;IMEX=2;RetrieveIds=Yes;DATABASE=" + fromDB + ";"
                 Case "DSN"
-                    fromConString = "DSN=" + fromDB + ";"
+                    Dim serverSplit As String() = fromDB.Split(New Char() {"\"c})
+                    fromConString = "Provider=sqloledb;Data Source=" + serverSplit(0) + ";Initial Catalog=" + serverSplit(1) + ";Integrated Security=SSPI;"
             End Select
 
             Dim fromDBCon As New OleDb.OleDbConnection(fromConString)
