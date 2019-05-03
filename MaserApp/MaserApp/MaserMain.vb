@@ -275,6 +275,24 @@ Public Class MaserMain
 
         wait(1)
 
+        ' File Copies
+        If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\appserver3\mitchellhumphrey\taxconvert\acegis.txt") <> 0 Then
+            FormatProgressReport(0, "", "!! Warning Encountered !!")
+
+        End If
+        If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\mtcrm2016main\E$\FTGPropImport\NewUploads\acegis.txt") <> 0 Then
+            FormatProgressReport(0, "", "!! Warning Encountered !!")
+
+        End If
+        If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\mtfinance2\programs\mcsj\importfiles\acegis.txt") <> 0 Then
+            FormatProgressReport(0, "", "!! Warning Encountered !!")
+
+        End If
+        If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\mtfinance2\programs\mcsj\importfiles\taxa1332.dat") <> 0 Then
+            FormatProgressReport(0, "", "!! Warning Encountered !!")
+
+        End If
+
         ' Delete Mod4 records (deleteModivRecords)
         If RunAccessQuery("DELETE FROM modivup;") <> 0 Then
             FormatProgressReport(0, "", "# Modiv Failed #")
@@ -675,6 +693,31 @@ Public Class MaserMain
 
         wait(1)
 
+        ' Copy Septics #### FILE DOESN'T EXIST! #####
+        'If CopyFile("s:\health\wells and septics\2016 septic  well spreadsheet.xlsx", My.Settings.WorkDir + "\septics.xlsx") <> 0 Then
+        'FormatProgressReport(0, "", "# Septics Failed #")
+        'Return 1
+        'Exit Function
+        'End If
+
+        ' Delete application records (DeleteSeptics) 
+        'If RunAccessQuery("DELETE septics.* FROM septics;") <> 0 Then
+        'FormatProgressReport(0, "", "# Septics Failed #")
+        'Return 1
+        'Exit Function
+        'End If
+
+        ' Import production application db
+        ' (septics.xlsx)
+
+        ' Run septics query (SepticsDeleteNUll)
+
+        ' (SepticsQ)
+
+        ' Export to SendDB
+
+
+
         FormatProgressReport(0, "", "# Septics Completed #", 40)
         Return 0
     End Function
@@ -688,6 +731,44 @@ Public Class MaserMain
         FormatProgressReport(0, "", "# BCO Started #")
 
         wait(1)
+
+        ' Run BCO Query (bcoquery)
+        Dim bco1Fields(,) As String =
+            {{"Block", "Text", "6"},
+            {"Lot", "Text", "6"},
+            {"Address", "Text", "255"},
+            {"Company Name", "Text", "255"},
+            {"Prior\Present Use", "Text", "255"},
+            {"Proposed Use", "Text", "255"},
+            {"Issuance Date", "Date/Time", "50"},
+            {"Application Date", "Date/Time", "50"},
+            {"PIN", "Text", "255"}
+            }
+
+        If ExportAccess(bco1Fields, "http://mtsharepoint2:14871/sites/Middletown/BCO/;LIST={36BB088F-6011-4E2C-9203-F4528F43EB99}", My.Settings.WorkDB, "BCO", "Sharepoint") <> 0 Then
+            FormatProgressReport(0, "", "# BCO Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Export
+        Dim bcoFields(,) As String =
+            {{"Block", "Text", "6"},
+            {"Lot", "Text", "6"},
+            {"Address", "Text", "255"},
+            {"Company Name", "Text", "255"},
+            {"Prior\Present Use", "Text", "255"},
+            {"Proposed Use", "Text", "255"},
+            {"Issuance Date", "Date/Time", "50"},
+            {"Application Date", "Date/Time", "50"},
+            {"PIN", "Text", "255"}
+            }
+
+        If ExportAccess(bcoFields, My.Settings.WorkDB, My.Settings.SendDB, "BCO") <> 0 Then
+            FormatProgressReport(0, "", "# BCO Failed #")
+            Return 1
+            Exit Function
+        End If
 
         FormatProgressReport(0, "", "# BCO Started #", 48)
         Return 0
@@ -703,6 +784,68 @@ Public Class MaserMain
 
         wait(1)
 
+        ' Delete zba database (drop table zoning)
+        If RunAccessQuery("DELETE * FROM zoning") <> 0 Then
+            FormatProgressReport(0, "", "# ZBA Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Import production zba
+        Dim zbaFields(,) As String =
+            {{"Applicant", "Text", "255"},
+            {"Zone", "Text", "255"},
+            {"File #", "Number", "50"},
+            {"Block", "Text", "50"},
+            {"Lot", "Text", "50"},
+            {"Variance/Application Type", "Text", "255"},
+            {"Explanation", "Text", "255"},
+            {"Decision", "Text", "255"},
+            {"Date", "Date/Time", "50"},
+            {"Additional Lot 1", "Text", "255"},
+            {"Additional Lot 2", "Text", "255"},
+            {"Additional Lot 3", "Text", "255"},
+            {"Additional Lot 4", "Text", "50"}
+            }
+        If ExportAccess(zbaFields, My.Settings.PlanningDB, My.Settings.WorkDB, "zoning") <> 0 Then
+            FormatProgressReport(0, "", "# ZBA Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Run zba query (ZoneBoard)
+        If RunAccessQuery("DROP TABLE ZBA") <> 0 Then
+            FormatProgressReport(0, "", "# ZBA Failed #")
+
+        End If
+
+        If RunAccessQuery("SELECT [zoning].[Applicant], [zoning].[Zone], [zoning].[File #], [zoning].[Block], [zoning].[Lot], [zoning].[Explanation], [zoning].[Decision], [zoning].[Date], '32'+'_'+[zoning].[Block]+'_'+[zoning].[Lot] AS Pin, [zoning].[Additional Lot 2], [zoning].[Additional Lot 3], [zoning].[Additional Lot 4] INTO ZBA FROM [zoning];") <> 0 Then
+            FormatProgressReport(0, "", "# ZBA Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Output to ftp site
+        Dim zba1Fields(,) As String =
+            {{"Applicant", "Text", "255"},
+            {"Zone", "Text", "255"},
+            {"File #", "Number", "50"},
+            {"Block", "Text", "50"},
+            {"Lot", "Text", "50"},
+            {"Explanation", "Text", "255"},
+            {"Decision", "Text", "255"},
+            {"Date", "Date/Time", "50"},
+            {"Pin", "Text", "255"},
+            {"Additional Lot 2", "Text", "255"},
+            {"Additional Lot 3", "Text", "255"},
+            {"Additional Lot 4", "Text", "50"}
+            }
+        If ExportAccess(zba1Fields, My.Settings.WorkDB, My.Settings.SendDB, "ZBA") <> 0 Then
+            FormatProgressReport(0, "", "# ZBA Failed #")
+            Return 1
+            Exit Function
+        End If
+
         FormatProgressReport(0, "", "# ZBA Completed #", 56)
         Return 0
     End Function
@@ -717,11 +860,78 @@ Public Class MaserMain
 
         wait(1)
 
+        ' Delete pla database (delete planning table)
+        If RunAccessQuery("DELETE * FROM planning") <> 0 Then
+            FormatProgressReport(0, "", "# PLA Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Import production pla
+        Dim plaFields(,) As String =
+            {{"Applicant", "Text", "255"},
+            {"Zone", "Text", "255"},
+            {"File #", "Number", "50"},
+            {"Block", "Text", "50"},
+            {"Lot", "Text", "50"},
+            {"Variance/Application Type", "Text", "255"},
+            {"Explanation", "Text", "255"},
+            {"Decision", "Text", "255"},
+            {"Date", "Date/Time", "50"},
+            {"TYPE", "Text", "255"},
+            {"Additional Lot 1", "Text", "255"},
+            {"Additional Lot 2", "Text", "255"},
+            {"Additional Lot 3", "Text", "255"},
+            {"Additional Lot 4", "Text", "50"}
+            }
+        If ExportAccess(plaFields, My.Settings.PlanningDB, My.Settings.WorkDB, "planning") <> 0 Then
+            FormatProgressReport(0, "", "# PLA Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Run pla query (PlanBoard)
+        If RunAccessQuery("DROP TABLE PLA") <> 0 Then
+            FormatProgressReport(0, "", "# PLA Failed #")
+
+        End If
+
+        If RunAccessQuery("SELECT [planning].[Applicant], [planning].[Zone], [planning].[File #], [planning].[Block], [planning].[Lot], [planning].[Variance/Application Type], [planning].[Explanation], [planning].[Decision], [planning].[Date], [planning].[TYPE], [planning].[Additional Lot 1], [planning].[Additional Lot 2], [planning].[Additional Lot 3], [planning].[Additional Lot 4], '32'+'_'+[planning].[Block]+'_'+[planning].[Lot] AS Pin INTO PLA FROM [planning];") <> 0 Then
+            FormatProgressReport(0, "", "# PLA Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Output to ftp site
+        Dim pla1Fields(,) As String =
+            {{"Applicant", "Text", "255"},
+            {"Zone", "Text", "255"},
+            {"File #", "Number", "50"},
+            {"Block", "Text", "50"},
+            {"Lot", "Text", "50"},
+            {"Variance/Application Type", "Text", "255"},
+            {"Explanation", "Text", "255"},
+            {"Decision", "Text", "255"},
+            {"Date", "Date/Time", "50"},
+            {"TYPE", "Text", "255"},
+            {"Pin", "Text", "255"},
+            {"Additional Lot 1", "Text", "255"},
+            {"Additional Lot 2", "Text", "255"},
+            {"Additional Lot 3", "Text", "255"},
+            {"Additional Lot 4", "Text", "50"}
+            }
+        If ExportAccess(pla1Fields, My.Settings.WorkDB, My.Settings.SendDB, "PLA") <> 0 Then
+            FormatProgressReport(0, "", "# PLA Failed #")
+            Return 1
+            Exit Function
+        End If
+
         FormatProgressReport(0, "", "# PLA Completed #", 64)
         Return 0
     End Function
 
     Private Function funMac() As Integer
+        ' Replaced by FTG No longer in use
         If My.Settings.SecMac = False Then
             FormatProgressReport(0, "", "# MAC Skipped #", 72)
             Return 0
@@ -745,6 +955,294 @@ Public Class MaserMain
 
         wait(1)
 
+        ' Delete cdbg database (delete table cdbg)
+        If RunAccessQuery("DELETE * FROM CDBG") <> 0 Then
+            FormatProgressReport(0, "", "# CD Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Import production cdbg
+        Dim cdFields(,) As String =
+            {{"Year Control", "Number", "255"},
+            {"Year", "Number", "255"},
+            {"StartMonth", "Text", "50"},
+            {"EndMonth", "Text", "50"},
+            {"Application_Number", "Text", "5"},
+            {"Application_Date", "Date/Time", "255"},
+            {"Applicant_Name", "Text", "255"},
+            {"Applicant Phone", "Text", "255"},
+            {"Street_Address", "Text", "255"},
+            {"City", "Text", "50"},
+            {"State", "Text", "2"},
+            {"Zip", "Text", "50"},
+            {"CoOwnerName", "Text", "50"},
+            {"Block", "Text", "50"},
+            {"Lot", "Text", "50"},
+            {"Census_Tract", "Text", "255"},
+            {"Census_Block", "Text", "255"},
+            {"Household Members", "Number", "255"},
+            {"HouseholdSize", "Number", "255"},
+            {"NumFemales", "Number", "255"},
+            {"FemAge1", "Number", "255"},
+            {"FemAge2", "Number", "255"},
+            {"FemAge3", "Number", "255"},
+            {"FemAge4", "Number", "255"},
+            {"FemAge5", "Number", "255"},
+            {"FemAge6", "Number", "255"},
+            {"FemAge7", "Number", "255"},
+            {"FemAge8", "Number", "255"},
+            {"RelAge", "Number", "255"},
+            {"FemSSNum1", "Text", "10"},
+            {"FemSSNum2", "Text", "50"},
+            {"FemSSNum3", "Text", "50"},
+            {"FemSSNum4", "Text", "50"},
+            {"FemSSNum5", "Text", "50"},
+            {"FemSSNum6", "Text", "50"},
+            {"FemSSNum7", "Text", "50"},
+            {"FemSSNum8", "Text", "50"},
+            {"RelSSNum", "Number", "255"},
+            {"Relatives", "Number", "255"},
+            {"NumMales", "Number", "255"},
+            {"MaleAge1", "Number", "255"},
+            {"MaleAge2", "Number", "255"},
+            {"MaleAge3", "Number", "255"},
+            {"MaleAge4", "Number", "255"},
+            {"MaleAge5", "Number", "255"},
+            {"MaleAge6", "Number", "255"},
+            {"MaleAge7", "Number", "255"},
+            {"MaleAge8", "Number", "255"},
+            {"MaleSSNum1", "Text", "50"},
+            {"MaleSSNum2", "Text", "50"},
+            {"MaleSSNum3", "Text", "50"},
+            {"MaleSSNum4", "Text", "50"},
+            {"MaleSSNum5", "Text", "50"},
+            {"MaleSSNum6", "Text", "50"},
+            {"MaleSSNum7", "Text", "50"},
+            {"MaleSSNum8", "Text", "50"},
+            {"Female HH", "Number", "255"},
+            {"Elderly", "Number", "255"},
+            {"Handicapped", "Text", "3"},
+            {"HandicappedNo", "Number", "255"},
+            {"Household Race", "Text", "255"},
+            {"FloodHazzard", "Text", "50"},
+            {"FloodInsurance", "Text", "50"},
+            {"Employer", "Text", "50"},
+            {"EmpAddress", "Text", "50"},
+            {"EmpPhone", "Text", "50"},
+            {"YearsEmp", "Number", "255"},
+            {"Salary", "Currency", "255"},
+            {"coOwnerEmp", "Text", "50"},
+            {"coOwnerEmpAddr", "Text", "50"},
+            {"coOwnerEmpPhone", "Text", "50"},
+            {"coOwnerYearsEmp", "Number", "255"},
+            {"coOwnerYearSalary", "Currency", "255"},
+            {"TotalFamilyIncome", "Currency", "255"},
+            {"More20000", "Text", "50"},
+            {"PropTaxesCurrent", "Text", "50"},
+            {"SewageCurrent", "Text", "50"},
+            {"CDGrant", "Text", "50"},
+            {"Ethnicity", "Text", "50"},
+            {"Comments", "Text", "255"},
+            {"Income Qualified", "Text", "255"},
+            {"IncomeQualificationDate", "Date/Time", "255"},
+            {"Initial Inspection Due Date", "Date/Time", "255"},
+            {"Initial Inspection", "Date/Time", "255"},
+            {"WorkWrite-up Due", "Date/Time", "255"},
+            {"WorkWriteup", "Date/Time", "255"},
+            {"WorkWriteupComp", "Date/Time", "255"},
+            {"Emergency Repair", "Text", "50"},
+            {"Insulation", "Text", "11"},
+            {"Septic", "Text", "6"},
+            {"Water", "Text", "5"},
+            {"Sump", "Text", "4"},
+            {"SmokeDetector", "Text", "13"},
+            {"Roof", "Text", "4"},
+            {"Electric", "Text", "8"},
+            {"Plumbing", "Text", "8"},
+            {"Structural", "Text", "10"},
+            {"HC Access", "Text", "9"},
+            {"Windows/Doors", "Text", "13"},
+            {"Sheetrock", "Text", "9"},
+            {"Stairs", "Text", "6"},
+            {"Heat", "Text", "255"},
+            {"Pest", "Text", "4"},
+            {"Misc", "Text", "5"},
+            {"MiscExplain", "Text", "255"},
+            {"ContractorName", "Text", "50"},
+            {"ContractorAddress", "Text", "50"},
+            {"ContractorCity", "Text", "50"},
+            {"ContractorState", "Text", "50"},
+            {"ContractorZip", "Text", "5"},
+            {"ContractorPhone", "Text", "50"},
+            {"ContractorName2", "Text", "50"},
+            {"ContractorAddress2", "Text", "50"},
+            {"ContractorCity2", "Text", "50"},
+            {"ContractorState2", "Text", "50"},
+            {"ContractorZip2", "Text", "5"},
+            {"ContractorPhone2", "Text", "50"},
+            {"ContractorName3", "Text", "50"},
+            {"ContractorAddress3", "Text", "50"},
+            {"ContractorCity3", "Text", "50"},
+            {"ContractorState3", "Text", "50"},
+            {"ContractorZip3", "Text", "5"},
+            {"ContractorName4", "Text", "50"},
+            {"ContractorAddress4", "Text", "50"},
+            {"ContractorCity4", "Text", "50"},
+            {"ContractorState4", "Text", "50"},
+            {"ContractorZip4", "Text", "5"},
+            {"BidDueDate", "Date/Time", "255"},
+            {"Bid Date", "Date/Time", "255"},
+            {"Contract Awarded", "Date/Time", "255"},
+            {"TotalLienAmt", "Currency", "255"},
+            {"BidAmount", "Currency", "255"},
+            {"AddWorkAmt", "Currency", "255"},
+            {"TotalGrantAmt", "Currency", "255"},
+            {"Building Permit Application", "Date/Time", "255"},
+            {"Building Permit Issued", "Date/Time", "255"},
+            {"FirstInspectionDate", "Date/Time", "255"},
+            {"ReInspectionDate", "Date/Time", "255"},
+            {"Progress Inspection #3", "Date/Time", "255"},
+            {"Progress Inspection #4", "Date/Time", "255"},
+            {"Final Inspection/Sign-off", "Date/Time", "255"},
+            {"Check Release", "Date/Time", "255"},
+            {"Mortgage Mailed", "Date/Time", "255"},
+            {"Mortgage Recorded", "Date/Time", "255"},
+            {"Mortgage Repayment Date", "Date/Time", "255"},
+            {"MortgageRepayPriorExp", "Text", "3"},
+            {"Mortgage Release", "Date/Time", "255"},
+            {"MortgageTotalAmt", "Currency", "255"},
+            {"Life Lien Mailed", "Date/Time", "255"},
+            {"Life Lien Recorded", "Date/Time", "255"},
+            {"Life Lien Paid", "Date/Time", "255"},
+            {"LiefLienAmount", "Currency", "255"},
+            {"Subordination Agreement", "Date/Time", "255"},
+            {"LifeLienAmt", "Currency", "255"},
+            {"GrantQual", "Date/Time", "255"},
+            {"c1VoucherNum1", "Text", "50"},
+            {"c1VoucherDate1", "Date/Time", "255"},
+            {"c1VoucherAmt1", "Currency", "255"},
+            {"c1VoucherNum2", "Text", "50"},
+            {"c1VoucherDate2", "Date/Time", "255"},
+            {"c1VouchAmt2", "Currency", "255"},
+            {"c1VoucherNum3", "Text", "50"},
+            {"c1VoucherDate3", "Date/Time", "255"},
+            {"c1VouchAmt3", "Currency", "255"},
+            {"c1VoucherNum4", "Text", "50"},
+            {"c1VoucherDate4", "Date/Time", "255"},
+            {"c1VouchAmt4", "Currency", "255"},
+            {"c1VouchTotal", "Currency", "255"},
+            {"c2VoucherNum1", "Text", "50"},
+            {"c2VoucherDate1", "Date/Time", "255"},
+            {"c2VoucherAmt1", "Currency", "255"},
+            {"c2VoucherNum2", "Text", "50"},
+            {"c2VoucherDate2", "Date/Time", "255"},
+            {"c2VoucherAmt2", "Currency", "255"},
+            {"c2VoucherNum3", "Text", "50"},
+            {"c2VoucherDate3", "Date/Time", "255"},
+            {"c2VoucherAmt3", "Currency", "255"},
+            {"c2VoucherNum4", "Text", "50"},
+            {"c2VoucherDate4", "Date/Time", "255"},
+            {"c2VoucherAmt4", "Currency", "255"},
+            {"c2VouchTotal", "Currency", "255"},
+            {"c3VoucherNum1", "Text", "50"},
+            {"c3VoucherDate1", "Date/Time", "255"},
+            {"c3VoucherAmt1", "Currency", "255"},
+            {"c3VoucherNum2", "Text", "50"},
+            {"c3VoucherDate2", "Date/Time", "255"},
+            {"c3VoucherAmt2", "Currency", "255"},
+            {"c3VoucherNum3", "Text", "50"},
+            {"c3VoucherDate3", "Date/Time", "255"},
+            {"c3VoucherAmt3", "Currency", "255"},
+            {"c3VoucherNum4", "Text", "50"},
+            {"c3VoucherDate4", "Date/Time", "255"},
+            {"c3VoucherAmt4", "Currency", "255"},
+            {"c3VouchTotal", "Currency", "255"},
+            {"c4VoucherNum1", "Text", "50"},
+            {"c4VoucherDate1", "Date/Time", "255"},
+            {"c4VoucherAmt1", "Currency", "255"},
+            {"c4VoucherNum2", "Text", "50"},
+            {"c4VoucherDate2", "Date/Time", "255"},
+            {"c4VoucherAmt2", "Currency", "255"},
+            {"c4VoucherNum3", "Text", "50"},
+            {"c4VoucherDate3", "Date/Time", "255"},
+            {"c4VoucherAmt3", "Currency", "255"},
+            {"c4VoucherNum4", "Text", "50"},
+            {"c4VoucherDate4", "Date/Time", "255"},
+            {"c4VoucherAmt4", "Currency", "255"},
+            {"c4VouchTotal", "Currency", "255"},
+            {"CheckAmt", "Currency", "255"},
+            {"CheckNum", "Number", "255"},
+            {"CompletionDate", "Date/Time", "255"},
+            {"Status", "Text", "50"},
+            {"notes", "Memo", "255"}
+            }
+        If ExportAccess(cdFields, My.Settings.PlanningDB, My.Settings.WorkDB, "CDBG") <> 0 Then
+            FormatProgressReport(0, "", "# CD Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Run cd query (CDQuery)
+        If RunAccessQuery("DROP TABLE CD") <> 0 Then
+            FormatProgressReport(0, "", "# CD Failed #")
+
+        End If
+
+        If RunAccessQuery("SELECT '32_'+[CDBG].[Block]+'_'+[CDBG].[Lot] AS Pin, CDBG.Status, CDBG.Application_Number, CDBG.Application_Date, CDBG.Applicant_Name, CDBG.[Applicant Phone], CDBG.Street_Address, CDBG.City, CDBG.State, CDBG.Zip, CDBG.CoOwnerName, CDBG.[Household Members], CDBG.HouseholdSize, CDBG.NumFemales, CDBG.NumMales, CDBG.Relatives, CDBG.Elderly, CDBG.Handicapped, CDBG.HandicappedNo, CDBG.FloodHazzard, CDBG.FloodInsurance, CDBG.[Emergency Repair], CDBG.Insulation, CDBG.Septic, CDBG.Water, CDBG.Sump, CDBG.SmokeDetector, CDBG.Roof, CDBG.Electric, CDBG.Plumbing, CDBG.Structural, CDBG.[HC Access], CDBG.[Windows/Doors], CDBG.Sheetrock, CDBG.Stairs, CDBG.Heat, CDBG.Pest, CDBG.Misc, CDBG.MiscExplain INTO CD FROM CDBG;") <> 0 Then
+            FormatProgressReport(0, "", "# CD Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Output to ftp site
+        Dim cd1Fields(,) As String =
+            {{"Pin", "Text", "255"},
+            {"Status", "Text", "50"},
+            {"Application_Number", "Text", "5"},
+            {"Application_Date", "Date/Time", "50"},
+            {"Applicant_Name", "Text", "255"},
+            {"Applicant Phone", "Text", "255"},
+            {"Street_Address", "Text", "255"},
+            {"City", "Text", "50"},
+            {"State", "Text", "2"},
+            {"Zip", "Text", "50"},
+            {"CoOwnerName", "Text", "50"},
+            {"Household Members", "Number", "50"},
+            {"HouseholdSize", "Number", "50"},
+            {"NumFemales", "Number", "50"},
+            {"NumMales", "Number", "50"},
+            {"Relatives", "Number", "50"},
+            {"Elderly", "Number", "50"},
+            {"Handicapped", "Text", "3"},
+            {"HandicappedNo", "Number", "50"},
+            {"FloodHazzard", "Text", "50"},
+            {"FloodInsurance", "Text", "50"},
+            {"Emergency Repair", "Text", "50"},
+            {"Insulation", "Text", "11"},
+            {"Septic", "Text", "6"},
+            {"Water", "Text", "5"},
+            {"Sump", "Text", "4"},
+            {"SmokeDetector", "Text", "13"},
+            {"Roof", "Text", "4"},
+            {"Electric", "Text", "8"},
+            {"Plumbing", "Text", "8"},
+            {"Structural", "Text", "10"},
+            {"HC Access", "Text", "9"},
+            {"Windows/Doors", "Text", "13"},
+            {"Sheetrock", "Text", "9"},
+            {"Stairs", "Text", "6"},
+            {"Heat", "Text", "255"},
+            {"Pest", "Text", "4"},
+            {"Misc", "Text", "5"},
+            {"MiscExplain", "Text", "255"}
+            }
+        If ExportAccess(cd1Fields, My.Settings.WorkDB, My.Settings.SendDB, "CD") <> 0 Then
+            FormatProgressReport(0, "", "# CD Failed #")
+            Return 1
+            Exit Function
+        End If
+
         FormatProgressReport(0, "", "# CD Completed #", 80)
         Return 0
     End Function
@@ -759,11 +1257,28 @@ Public Class MaserMain
 
         wait(1)
 
+        ' Delete CPM database (delete table CPM)
+        If RunAccessQuery("DELETE * FROM CPM") <> 0 Then
+            FormatProgressReport(0, "", "# CPM Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Run cpm query (cpmquery)
+        If RunAccessQuery("DELETE * FROM CPM") <> 0 Then
+            FormatProgressReport(0, "", "# CPM Failed #")
+            Return 1
+            Exit Function
+        End If
+
+        ' Export to send
+
         FormatProgressReport(0, "", "# CPM Completed #", 88)
         Return 0
     End Function
 
     Private Function funFtg() As Integer
+        ' Not in use
         If My.Settings.SecFTG = False Then
             FormatProgressReport(0, "", "# FTG Skipped #", 96)
             Return 0
@@ -943,6 +1458,20 @@ Public Class MaserMain
         FormatProgressReport(0, "", fromPath + " moved/renamed to " + toPath)
         Return 0
     End Function
+
+    Private Function CopyFile(fromPath As String, toPath As String) As Integer
+        Try
+
+            System.IO.File.Copy(fromPath, toPath, True)
+        Catch ex As Exception
+            FormatProgressReport(0, "", ex.Message)
+            FormatProgressReport(0, "", "Unable to copy file from " + fromPath + " to " + toPath)
+            Return 1
+            Exit Function
+        End Try
+        FormatProgressReport(0, "", fromPath + " copied to " + toPath)
+        Return 0
+    End Function
     Private Function ImportToAccess(fieldArray As Array, textFile As String, table As String) As Integer
 
 
@@ -1007,15 +1536,15 @@ Public Class MaserMain
         FormatProgressReport(100, "", "Import of " + textFile + " Successful")
         Return 0
     End Function
-    Private Function ExportAccess(fieldArray(,) As String, fromDB As String, toDB As String, tableName As String) As Integer
+    Private Function ExportAccess(fieldArray(,) As String, fromDB As String, toDB As String, tableName As String, Optional connectionType As String = "Access", Optional selectOveride As String = "") As Integer
         Dim selectText As String = ""
         Dim valueText As String = ""
         Dim fieldText As String = ""
         Dim insertText As String = ""
 
         For i = 0 To fieldArray.GetLength(0) - 1
-            fieldText += fieldArray(i, 0).ToString + ","
-            valueText += "@" + fieldArray(i, 0).ToString + ","
+            fieldText += "[" + fieldArray(i, 0).ToString + "],"
+            valueText += "[@" + fieldArray(i, 0).ToString + "],"
         Next
 
         fieldText = fieldText.Trim().Remove(fieldText.Length - 1)
@@ -1026,9 +1555,17 @@ Public Class MaserMain
         FormatProgressReport(25, "Importing " + tableName, "Importing " + tableName + " from " + fromDB + " to " + toDB)
 
         Try
+            Dim fromConString As String = ""
+            Select Case connectionType
+                Case "Access"
+                    fromConString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fromDB
+                Case "Sharepoint"
+                    fromConString = "Provider=Microsoft.ACE.OLEDB.12.0;WSS;IMEX=2;RetrieveIds=Yes;DATABASE=" + fromDB + ";"
+                Case "DSN"
+                    fromConString = "DSN=" + fromDB + ";"
+            End Select
 
-
-            Dim fromDBCon As New OleDb.OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fromDB)
+            Dim fromDBCon As New OleDb.OleDbConnection(fromConString)
             Dim toDBCon As New OleDb.OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + toDB)
 
             fromDBCon.Open()
@@ -1058,6 +1595,9 @@ Public Class MaserMain
                     Case "Number"
                         Dim fieldType As OleDb.OleDbType = OleDb.OleDbType.Integer
                         da.InsertCommand.Parameters.Add("@" + fieldArray(i, 0).ToString, fieldType, Convert.ToInt32(fieldArray(i, 2)), fieldArray(i, 0).ToString)
+                    Case "Currency"
+                        Dim fieldType As OleDb.OleDbType = OleDb.OleDbType.Numeric
+                        da.InsertCommand.Parameters.Add("@" + fieldArray(i, 0).ToString, fieldType, Convert.ToInt32(fieldArray(i, 2)), fieldArray(i, 0).ToString)
                 End Select
             Next
 
@@ -1079,6 +1619,8 @@ Public Class MaserMain
         Catch ex As Exception
             FormatProgressReport(100, "", ex.Message)
             FormatProgressReport(100, "", "Import of " + tableName + " from " + fromDB + " to " + toDB + " Failed")
+            FormatProgressReport(100, "", "Select Query:" + selectText)
+            FormatProgressReport(100, "", "Insert Query:" + insertText)
             Return 1
             Exit Function
         End Try

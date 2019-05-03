@@ -23,11 +23,28 @@ Partial Class frmOptions
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.txbSendDB = New System.Windows.Forms.TextBox()
-        Me.ofdWorkDB = New System.Windows.Forms.OpenFileDialog()
-        Me.fbdWorkDir = New System.Windows.Forms.FolderBrowserDialog()
         Me.btnChooseSend = New System.Windows.Forms.Button()
         Me.lblUnzip = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblMaserWorkDir = New System.Windows.Forms.Label()
+        Me.btnChooseMaser = New System.Windows.Forms.Button()
+        Me.btnOK = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.btnChooseCODB = New System.Windows.Forms.Button()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.btnChooseWorkDB = New System.Windows.Forms.Button()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.btnChoosePlanning = New System.Windows.Forms.Button()
+        Me.ofdPlanningDB = New System.Windows.Forms.OpenFileDialog()
+        Me.txbPlanningDB = New System.Windows.Forms.TextBox()
+        Me.txbWorkDB = New System.Windows.Forms.TextBox()
+        Me.txbCODB = New System.Windows.Forms.TextBox()
+        Me.txbSendDB = New System.Windows.Forms.TextBox()
         Me.txbAcegisUnzip = New System.Windows.Forms.TextBox()
         Me.txbTaxa1332Unzip = New System.Windows.Forms.TextBox()
         Me.cbZone = New System.Windows.Forms.CheckBox()
@@ -43,12 +60,6 @@ Partial Class frmOptions
         Me.cbModiv = New System.Windows.Forms.CheckBox()
         Me.cbAcegis = New System.Windows.Forms.CheckBox()
         Me.cbTaxa1332 = New System.Windows.Forms.CheckBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.tbxAcegisFile = New System.Windows.Forms.TextBox()
         Me.tbxTaxa1332File = New System.Windows.Forms.TextBox()
         Me.tbxAcegisPwd = New System.Windows.Forms.TextBox()
@@ -57,16 +68,9 @@ Partial Class frmOptions
         Me.tbxTaxa1332Pwd = New System.Windows.Forms.TextBox()
         Me.tbxTaxa1332User = New System.Windows.Forms.TextBox()
         Me.tbxTaxa1332FTP = New System.Windows.Forms.TextBox()
-        Me.lblMaserWorkDir = New System.Windows.Forms.Label()
-        Me.btnChooseMaser = New System.Windows.Forms.Button()
         Me.txbWorkDir = New System.Windows.Forms.TextBox()
-        Me.btnOK = New System.Windows.Forms.Button()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.txbCODB = New System.Windows.Forms.TextBox()
-        Me.btnChooseCODB = New System.Windows.Forms.Button()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.txbWorkDB = New System.Windows.Forms.TextBox()
-        Me.btnChooseWorkDB = New System.Windows.Forms.Button()
+        Me.ofdWorkDB = New System.Windows.Forms.OpenFileDialog()
+        Me.fbdWorkDir = New System.Windows.Forms.FolderBrowserDialog()
         Me.ofdCODB = New System.Windows.Forms.OpenFileDialog()
         Me.ofdSendDB = New System.Windows.Forms.OpenFileDialog()
         Me.SuspendLayout()
@@ -80,25 +84,6 @@ Partial Class frmOptions
         Me.Label7.Size = New System.Drawing.Size(94, 13)
         Me.Label7.TabIndex = 76
         Me.Label7.Text = "Send Database"
-        '
-        'txbSendDB
-        '
-        Me.txbSendDB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "SendDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txbSendDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbSendDB.Location = New System.Drawing.Point(153, 96)
-        Me.txbSendDB.Name = "txbSendDB"
-        Me.txbSendDB.Size = New System.Drawing.Size(418, 20)
-        Me.txbSendDB.TabIndex = 74
-        Me.txbSendDB.Text = Global.MaserApp.My.MySettings.Default.SendDB
-        '
-        'ofdWorkDB
-        '
-        Me.ofdWorkDB.FileName = Global.MaserApp.My.MySettings.Default.WorkDB
-        Me.ofdWorkDB.InitialDirectory = Global.MaserApp.My.MySettings.Default.WorkDB
-        '
-        'fbdWorkDir
-        '
-        Me.fbdWorkDir.SelectedPath = Global.MaserApp.My.MySettings.Default.WorkDir
         '
         'btnChooseSend
         '
@@ -119,6 +104,201 @@ Partial Class frmOptions
         Me.lblUnzip.Size = New System.Drawing.Size(84, 13)
         Me.lblUnzip.TabIndex = 73
         Me.lblUnzip.Text = "Unzipped File"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(521, 245)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(61, 13)
+        Me.Label6.TabIndex = 57
+        Me.Label6.Text = "Password"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(397, 245)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(33, 13)
+        Me.Label5.TabIndex = 56
+        Me.Label5.Text = "User"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(277, 244)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(30, 13)
+        Me.Label4.TabIndex = 55
+        Me.Label4.Text = "FTP"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(150, 245)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(59, 13)
+        Me.Label3.TabIndex = 54
+        Me.Label3.Text = "FileName"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(101, 291)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(45, 13)
+        Me.Label2.TabIndex = 53
+        Me.Label2.Text = "Acegis"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(82, 265)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(63, 13)
+        Me.Label1.TabIndex = 52
+        Me.Label1.Text = "Taxa1332"
+        '
+        'lblMaserWorkDir
+        '
+        Me.lblMaserWorkDir.AutoSize = True
+        Me.lblMaserWorkDir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblMaserWorkDir.Location = New System.Drawing.Point(55, 174)
+        Me.lblMaserWorkDir.Name = "lblMaserWorkDir"
+        Me.lblMaserWorkDir.Size = New System.Drawing.Size(92, 13)
+        Me.lblMaserWorkDir.TabIndex = 43
+        Me.lblMaserWorkDir.Text = "Work Directory"
+        '
+        'btnChooseMaser
+        '
+        Me.btnChooseMaser.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnChooseMaser.Location = New System.Drawing.Point(600, 169)
+        Me.btnChooseMaser.Name = "btnChooseMaser"
+        Me.btnChooseMaser.Size = New System.Drawing.Size(87, 23)
+        Me.btnChooseMaser.TabIndex = 42
+        Me.btnChooseMaser.Text = "Choose Dir"
+        Me.btnChooseMaser.UseVisualStyleBackColor = True
+        '
+        'btnOK
+        '
+        Me.btnOK.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnOK.Location = New System.Drawing.Point(834, 415)
+        Me.btnOK.Name = "btnOK"
+        Me.btnOK.Size = New System.Drawing.Size(87, 23)
+        Me.btnOK.TabIndex = 40
+        Me.btnOK.Text = "OK"
+        Me.btnOK.UseVisualStyleBackColor = True
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(65, 73)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(82, 13)
+        Me.Label8.TabIndex = 79
+        Me.Label8.Text = "CO Database"
+        '
+        'btnChooseCODB
+        '
+        Me.btnChooseCODB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnChooseCODB.Location = New System.Drawing.Point(600, 68)
+        Me.btnChooseCODB.Name = "btnChooseCODB"
+        Me.btnChooseCODB.Size = New System.Drawing.Size(87, 23)
+        Me.btnChooseCODB.TabIndex = 78
+        Me.btnChooseCODB.Text = "Choose DB"
+        Me.btnChooseCODB.UseVisualStyleBackColor = True
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(55, 47)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(95, 13)
+        Me.Label9.TabIndex = 82
+        Me.Label9.Text = "Work Database"
+        '
+        'btnChooseWorkDB
+        '
+        Me.btnChooseWorkDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnChooseWorkDB.Location = New System.Drawing.Point(600, 42)
+        Me.btnChooseWorkDB.Name = "btnChooseWorkDB"
+        Me.btnChooseWorkDB.Size = New System.Drawing.Size(87, 23)
+        Me.btnChooseWorkDB.TabIndex = 81
+        Me.btnChooseWorkDB.Text = "Choose DB"
+        Me.btnChooseWorkDB.UseVisualStyleBackColor = True
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(31, 125)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(114, 13)
+        Me.Label10.TabIndex = 85
+        Me.Label10.Text = "Planning Database"
+        '
+        'btnChoosePlanning
+        '
+        Me.btnChoosePlanning.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnChoosePlanning.Location = New System.Drawing.Point(600, 120)
+        Me.btnChoosePlanning.Name = "btnChoosePlanning"
+        Me.btnChoosePlanning.Size = New System.Drawing.Size(87, 23)
+        Me.btnChoosePlanning.TabIndex = 84
+        Me.btnChoosePlanning.Text = "Choose DB"
+        Me.btnChoosePlanning.UseVisualStyleBackColor = True
+        '
+        'ofdPlanningDB
+        '
+        Me.ofdPlanningDB.FileName = Global.MaserApp.My.MySettings.Default.PlanningDB
+        Me.ofdPlanningDB.InitialDirectory = Global.MaserApp.My.MySettings.Default.PlanningDB
+        '
+        'txbPlanningDB
+        '
+        Me.txbPlanningDB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "PlanningDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txbPlanningDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txbPlanningDB.Location = New System.Drawing.Point(153, 122)
+        Me.txbPlanningDB.Name = "txbPlanningDB"
+        Me.txbPlanningDB.Size = New System.Drawing.Size(418, 20)
+        Me.txbPlanningDB.TabIndex = 83
+        Me.txbPlanningDB.Text = Global.MaserApp.My.MySettings.Default.PlanningDB
+        '
+        'txbWorkDB
+        '
+        Me.txbWorkDB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "WorkDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txbWorkDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txbWorkDB.Location = New System.Drawing.Point(153, 44)
+        Me.txbWorkDB.Name = "txbWorkDB"
+        Me.txbWorkDB.Size = New System.Drawing.Size(418, 20)
+        Me.txbWorkDB.TabIndex = 80
+        Me.txbWorkDB.Text = Global.MaserApp.My.MySettings.Default.WorkDB
+        '
+        'txbCODB
+        '
+        Me.txbCODB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "CONewDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txbCODB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txbCODB.Location = New System.Drawing.Point(153, 70)
+        Me.txbCODB.Name = "txbCODB"
+        Me.txbCODB.Size = New System.Drawing.Size(418, 20)
+        Me.txbCODB.TabIndex = 77
+        Me.txbCODB.Text = Global.MaserApp.My.MySettings.Default.CONewDB
+        '
+        'txbSendDB
+        '
+        Me.txbSendDB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "SendDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txbSendDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txbSendDB.Location = New System.Drawing.Point(153, 96)
+        Me.txbSendDB.Name = "txbSendDB"
+        Me.txbSendDB.Size = New System.Drawing.Size(418, 20)
+        Me.txbSendDB.TabIndex = 74
+        Me.txbSendDB.Text = Global.MaserApp.My.MySettings.Default.SendDB
         '
         'txbAcegisUnzip
         '
@@ -304,66 +484,6 @@ Partial Class frmOptions
         Me.cbTaxa1332.Text = "taxa1332"
         Me.cbTaxa1332.UseVisualStyleBackColor = True
         '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(521, 245)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(61, 13)
-        Me.Label6.TabIndex = 57
-        Me.Label6.Text = "Password"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(397, 245)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(33, 13)
-        Me.Label5.TabIndex = 56
-        Me.Label5.Text = "User"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(277, 244)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(30, 13)
-        Me.Label4.TabIndex = 55
-        Me.Label4.Text = "FTP"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(150, 245)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(59, 13)
-        Me.Label3.TabIndex = 54
-        Me.Label3.Text = "FileName"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(101, 291)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 13)
-        Me.Label2.TabIndex = 53
-        Me.Label2.Text = "Acegis"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(82, 265)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(63, 13)
-        Me.Label1.TabIndex = 52
-        Me.Label1.Text = "Taxa1332"
-        '
         'tbxAcegisFile
         '
         Me.tbxAcegisFile.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "AcegisFile", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
@@ -444,105 +564,24 @@ Partial Class frmOptions
         Me.tbxTaxa1332FTP.TabIndex = 44
         Me.tbxTaxa1332FTP.Text = Global.MaserApp.My.MySettings.Default.Taxa1332FTP
         '
-        'lblMaserWorkDir
-        '
-        Me.lblMaserWorkDir.AutoSize = True
-        Me.lblMaserWorkDir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMaserWorkDir.Location = New System.Drawing.Point(55, 125)
-        Me.lblMaserWorkDir.Name = "lblMaserWorkDir"
-        Me.lblMaserWorkDir.Size = New System.Drawing.Size(92, 13)
-        Me.lblMaserWorkDir.TabIndex = 43
-        Me.lblMaserWorkDir.Text = "Work Directory"
-        '
-        'btnChooseMaser
-        '
-        Me.btnChooseMaser.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnChooseMaser.Location = New System.Drawing.Point(600, 120)
-        Me.btnChooseMaser.Name = "btnChooseMaser"
-        Me.btnChooseMaser.Size = New System.Drawing.Size(87, 23)
-        Me.btnChooseMaser.TabIndex = 42
-        Me.btnChooseMaser.Text = "Choose Dir"
-        Me.btnChooseMaser.UseVisualStyleBackColor = True
-        '
         'txbWorkDir
         '
         Me.txbWorkDir.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "WorkDir", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txbWorkDir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbWorkDir.Location = New System.Drawing.Point(153, 122)
+        Me.txbWorkDir.Location = New System.Drawing.Point(153, 171)
         Me.txbWorkDir.Name = "txbWorkDir"
         Me.txbWorkDir.Size = New System.Drawing.Size(418, 20)
         Me.txbWorkDir.TabIndex = 41
         Me.txbWorkDir.Text = Global.MaserApp.My.MySettings.Default.WorkDir
         '
-        'btnOK
+        'ofdWorkDB
         '
-        Me.btnOK.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnOK.Location = New System.Drawing.Point(834, 415)
-        Me.btnOK.Name = "btnOK"
-        Me.btnOK.Size = New System.Drawing.Size(87, 23)
-        Me.btnOK.TabIndex = 40
-        Me.btnOK.Text = "OK"
-        Me.btnOK.UseVisualStyleBackColor = True
+        Me.ofdWorkDB.FileName = Global.MaserApp.My.MySettings.Default.WorkDB
+        Me.ofdWorkDB.InitialDirectory = Global.MaserApp.My.MySettings.Default.WorkDB
         '
-        'Label8
+        'fbdWorkDir
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(65, 73)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(82, 13)
-        Me.Label8.TabIndex = 79
-        Me.Label8.Text = "CO Database"
-        '
-        'txbCODB
-        '
-        Me.txbCODB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "CONewDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txbCODB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbCODB.Location = New System.Drawing.Point(153, 70)
-        Me.txbCODB.Name = "txbCODB"
-        Me.txbCODB.Size = New System.Drawing.Size(418, 20)
-        Me.txbCODB.TabIndex = 77
-        Me.txbCODB.Text = Global.MaserApp.My.MySettings.Default.CONewDB
-        '
-        'btnChooseCODB
-        '
-        Me.btnChooseCODB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnChooseCODB.Location = New System.Drawing.Point(600, 68)
-        Me.btnChooseCODB.Name = "btnChooseCODB"
-        Me.btnChooseCODB.Size = New System.Drawing.Size(87, 23)
-        Me.btnChooseCODB.TabIndex = 78
-        Me.btnChooseCODB.Text = "Choose DB"
-        Me.btnChooseCODB.UseVisualStyleBackColor = True
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(55, 47)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(95, 13)
-        Me.Label9.TabIndex = 82
-        Me.Label9.Text = "Work Database"
-        '
-        'txbWorkDB
-        '
-        Me.txbWorkDB.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "WorkDB", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txbWorkDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbWorkDB.Location = New System.Drawing.Point(153, 44)
-        Me.txbWorkDB.Name = "txbWorkDB"
-        Me.txbWorkDB.Size = New System.Drawing.Size(418, 20)
-        Me.txbWorkDB.TabIndex = 80
-        Me.txbWorkDB.Text = Global.MaserApp.My.MySettings.Default.WorkDB
-        '
-        'btnChooseWorkDB
-        '
-        Me.btnChooseWorkDB.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnChooseWorkDB.Location = New System.Drawing.Point(600, 42)
-        Me.btnChooseWorkDB.Name = "btnChooseWorkDB"
-        Me.btnChooseWorkDB.Size = New System.Drawing.Size(87, 23)
-        Me.btnChooseWorkDB.TabIndex = 81
-        Me.btnChooseWorkDB.Text = "Choose DB"
-        Me.btnChooseWorkDB.UseVisualStyleBackColor = True
+        Me.fbdWorkDir.SelectedPath = Global.MaserApp.My.MySettings.Default.WorkDir
         '
         'ofdCODB
         '
@@ -560,6 +599,9 @@ Partial Class frmOptions
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(933, 450)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label10)
+        Me.Controls.Add(Me.txbPlanningDB)
+        Me.Controls.Add(Me.btnChoosePlanning)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.txbWorkDB)
         Me.Controls.Add(Me.btnChooseWorkDB)
@@ -658,4 +700,8 @@ Partial Class frmOptions
     Friend WithEvents btnChooseWorkDB As Button
     Friend WithEvents ofdCODB As OpenFileDialog
     Friend WithEvents ofdSendDB As OpenFileDialog
+    Friend WithEvents Label10 As Label
+    Friend WithEvents txbPlanningDB As TextBox
+    Friend WithEvents btnChoosePlanning As Button
+    Friend WithEvents ofdPlanningDB As OpenFileDialog
 End Class

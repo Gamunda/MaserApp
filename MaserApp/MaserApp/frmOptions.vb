@@ -26,4 +26,10 @@
             txbSendDB.Text = ofdSendDB.FileName
         End If
     End Sub
+
+    Private Sub BtnChoosePlanning_Click(sender As Object, e As EventArgs) Handles btnChoosePlanning.Click
+        If (ofdPlanningDB.ShowDialog() = DialogResult.OK) Then
+            txbPlanningDB.Text = ofdPlanningDB.FileName
+        End If
+    End Sub
 End Class

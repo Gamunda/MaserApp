@@ -83,5 +83,8 @@
     <Setting Name="SendDB" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\johnadams\Documents\Send\workdb.mdb</Value>
     </Setting>
+    <Setting Name="PlanningDB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Y:\planning\planningdept.mdb</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
