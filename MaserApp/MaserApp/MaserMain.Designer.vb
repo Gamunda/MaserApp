@@ -22,6 +22,7 @@ Partial Class MaserMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.msMain = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -42,6 +43,12 @@ Partial Class MaserMain
         Me.pgbOverall = New System.Windows.Forms.ProgressBar()
         Me.lblTaskStatus = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.tmrTask = New System.Windows.Forms.Timer(Me.components)
+        Me.lblHours = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblMinutes = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblSeconds = New System.Windows.Forms.Label()
         Me.msMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -64,7 +71,7 @@ Partial Class MaserMain
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExitToolStripMenuItem.Text = "E&xit"
         '
         'ToolsToolStripMenuItem
@@ -211,12 +218,66 @@ Partial Class MaserMain
         Me.Label2.TabIndex = 9
         Me.Label2.Text = "Overall"
         '
+        'tmrTask
+        '
+        Me.tmrTask.Interval = 1000
+        '
+        'lblHours
+        '
+        Me.lblHours.Location = New System.Drawing.Point(559, 395)
+        Me.lblHours.Name = "lblHours"
+        Me.lblHours.Size = New System.Drawing.Size(20, 18)
+        Me.lblHours.TabIndex = 10
+        Me.lblHours.Text = "00"
+        Me.lblHours.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(585, 398)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(10, 13)
+        Me.Label3.TabIndex = 11
+        Me.Label3.Text = ":"
+        '
+        'lblMinutes
+        '
+        Me.lblMinutes.Location = New System.Drawing.Point(601, 395)
+        Me.lblMinutes.Name = "lblMinutes"
+        Me.lblMinutes.Size = New System.Drawing.Size(20, 18)
+        Me.lblMinutes.TabIndex = 12
+        Me.lblMinutes.Text = "00"
+        Me.lblMinutes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(627, 397)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(10, 13)
+        Me.Label5.TabIndex = 13
+        Me.Label5.Text = ":"
+        '
+        'lblSeconds
+        '
+        Me.lblSeconds.Location = New System.Drawing.Point(643, 395)
+        Me.lblSeconds.Name = "lblSeconds"
+        Me.lblSeconds.Size = New System.Drawing.Size(20, 18)
+        Me.lblSeconds.TabIndex = 14
+        Me.lblSeconds.Text = "00"
+        Me.lblSeconds.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'MaserMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblSeconds)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.lblMinutes)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.lblHours)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.lblTaskStatus)
         Me.Controls.Add(Me.pgbOverall)
@@ -257,4 +318,10 @@ Partial Class MaserMain
     Friend WithEvents pgbOverall As ProgressBar
     Friend WithEvents lblTaskStatus As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents tmrTask As Timer
+    Friend WithEvents lblHours As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents lblMinutes As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents lblSeconds As Label
 End Class

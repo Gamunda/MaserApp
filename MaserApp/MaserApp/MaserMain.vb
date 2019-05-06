@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.FileIO
 Public Class MaserMain
     Dim taxa1332 As New maserTask(False, False)
     Dim percMultiplier As Integer = 6
+    Dim timercount As Integer = 0
     Public Class ImportArguments
         Public _textfile As String
         Public _fieldarray As Array
@@ -49,7 +50,9 @@ Public Class MaserMain
             taskUpdate = e.UserState.ToString
             overPerc = pgbOverall.Value
         End If
-
+        If pgbOverall.Value = 0 Then
+            tmrTask.Enabled = True
+        End If
         pgbTask.Value = e.ProgressPercentage
         pgbOverall.Value = overPerc
         If consoleUpdate <> "" Then
@@ -69,6 +72,7 @@ Public Class MaserMain
             pgbOverall.ForeColor = Color.DarkRed
             pgbOverall.Value = 100
         End If
+        tmrTask.Enabled = False
     End Sub
     Private Sub toggleGUI()
 
@@ -1800,5 +1804,12 @@ Public Class MaserMain
         frmOptions.ShowDialog()
     End Sub
 
-
+    Private Sub TmrTask_Tick(sender As Object, e As EventArgs) Handles tmrTask.Tick
+        timercount += 1
+        With TimeSpan.FromSeconds(timercount)
+            lblHours.Text = .Hours.ToString("D2")
+            lblMinutes.Text = .Minutes.ToString("D2")
+            lblSeconds.Text = .Seconds.ToString("D2")
+        End With
+    End Sub
 End Class
