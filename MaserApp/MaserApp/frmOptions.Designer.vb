@@ -79,6 +79,11 @@ Partial Class frmOptions
         Me.fbdWorkDir = New System.Windows.Forms.FolderBrowserDialog()
         Me.ofdCODB = New System.Windows.Forms.OpenFileDialog()
         Me.ofdSendDB = New System.Windows.Forms.OpenFileDialog()
+        Me.lblLogFile = New System.Windows.Forms.Label()
+        Me.btnChooseLog = New System.Windows.Forms.Button()
+        Me.txbLogFile = New System.Windows.Forms.TextBox()
+        Me.btnClearLog = New System.Windows.Forms.Button()
+        Me.fbdLogFile = New System.Windows.Forms.FolderBrowserDialog()
         Me.SuspendLayout()
         '
         'Label7
@@ -175,7 +180,7 @@ Partial Class frmOptions
         '
         Me.lblMaserWorkDir.AutoSize = True
         Me.lblMaserWorkDir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMaserWorkDir.Location = New System.Drawing.Point(55, 174)
+        Me.lblMaserWorkDir.Location = New System.Drawing.Point(55, 151)
         Me.lblMaserWorkDir.Name = "lblMaserWorkDir"
         Me.lblMaserWorkDir.Size = New System.Drawing.Size(92, 13)
         Me.lblMaserWorkDir.TabIndex = 43
@@ -184,7 +189,7 @@ Partial Class frmOptions
         'btnChooseMaser
         '
         Me.btnChooseMaser.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnChooseMaser.Location = New System.Drawing.Point(600, 169)
+        Me.btnChooseMaser.Location = New System.Drawing.Point(600, 146)
         Me.btnChooseMaser.Name = "btnChooseMaser"
         Me.btnChooseMaser.Size = New System.Drawing.Size(87, 23)
         Me.btnChooseMaser.TabIndex = 42
@@ -265,7 +270,7 @@ Partial Class frmOptions
         '
         Me.lblUserName.AutoSize = True
         Me.lblUserName.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUserName.Location = New System.Drawing.Point(80, 205)
+        Me.lblUserName.Location = New System.Drawing.Point(82, 214)
         Me.lblUserName.Name = "lblUserName"
         Me.lblUserName.Size = New System.Drawing.Size(65, 13)
         Me.lblUserName.TabIndex = 86
@@ -275,7 +280,7 @@ Partial Class frmOptions
         '
         Me.lblPwd.AutoSize = True
         Me.lblPwd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPwd.Location = New System.Drawing.Point(85, 231)
+        Me.lblPwd.Location = New System.Drawing.Point(87, 240)
         Me.lblPwd.Name = "lblPwd"
         Me.lblPwd.Size = New System.Drawing.Size(61, 13)
         Me.lblPwd.TabIndex = 87
@@ -284,7 +289,7 @@ Partial Class frmOptions
         'txbUserName
         '
         Me.txbUserName.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "UserName", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txbUserName.Location = New System.Drawing.Point(151, 202)
+        Me.txbUserName.Location = New System.Drawing.Point(153, 211)
         Me.txbUserName.Name = "txbUserName"
         Me.txbUserName.Size = New System.Drawing.Size(420, 20)
         Me.txbUserName.TabIndex = 88
@@ -293,7 +298,7 @@ Partial Class frmOptions
         'txbPassword
         '
         Me.txbPassword.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "Password", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.txbPassword.Location = New System.Drawing.Point(151, 228)
+        Me.txbPassword.Location = New System.Drawing.Point(153, 237)
         Me.txbPassword.Name = "txbPassword"
         Me.txbPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txbPassword.Size = New System.Drawing.Size(420, 20)
@@ -406,6 +411,7 @@ Partial Class frmOptions
         Me.cbFTG.AutoSize = True
         Me.cbFTG.Checked = Global.MaserApp.My.MySettings.Default.SecFTG
         Me.cbFTG.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecFTG", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.cbFTG.ForeColor = System.Drawing.Color.DarkRed
         Me.cbFTG.Location = New System.Drawing.Point(303, 379)
         Me.cbFTG.Name = "cbFTG"
         Me.cbFTG.Size = New System.Drawing.Size(47, 17)
@@ -444,6 +450,7 @@ Partial Class frmOptions
         Me.cbMAC.AutoSize = True
         Me.cbMAC.Checked = Global.MaserApp.My.MySettings.Default.SecMac
         Me.cbMAC.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecMac", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.cbMAC.ForeColor = System.Drawing.Color.DarkRed
         Me.cbMAC.Location = New System.Drawing.Point(635, 356)
         Me.cbMAC.Name = "cbMAC"
         Me.cbMAC.Size = New System.Drawing.Size(49, 17)
@@ -496,6 +503,7 @@ Partial Class frmOptions
         Me.cbSeptics.Checked = Global.MaserApp.My.MySettings.Default.SecSeptics
         Me.cbSeptics.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbSeptics.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.MaserApp.My.MySettings.Default, "SecSeptics", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.cbSeptics.ForeColor = System.Drawing.Color.DarkRed
         Me.cbSeptics.Location = New System.Drawing.Point(446, 356)
         Me.cbSeptics.Name = "cbSeptics"
         Me.cbSeptics.Size = New System.Drawing.Size(59, 17)
@@ -636,7 +644,7 @@ Partial Class frmOptions
         '
         Me.txbWorkDir.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "WorkDir", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.txbWorkDir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbWorkDir.Location = New System.Drawing.Point(153, 171)
+        Me.txbWorkDir.Location = New System.Drawing.Point(153, 148)
         Me.txbWorkDir.Name = "txbWorkDir"
         Me.txbWorkDir.Size = New System.Drawing.Size(418, 20)
         Me.txbWorkDir.TabIndex = 41
@@ -666,12 +674,60 @@ Partial Class frmOptions
         Me.ofdSendDB.FileName = Global.MaserApp.My.MySettings.Default.SendDB
         Me.ofdSendDB.InitialDirectory = Global.MaserApp.My.MySettings.Default.SendDB
         '
+        'lblLogFile
+        '
+        Me.lblLogFile.AutoSize = True
+        Me.lblLogFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLogFile.Location = New System.Drawing.Point(93, 177)
+        Me.lblLogFile.Name = "lblLogFile"
+        Me.lblLogFile.Size = New System.Drawing.Size(52, 13)
+        Me.lblLogFile.TabIndex = 94
+        Me.lblLogFile.Text = "Log File"
+        '
+        'btnChooseLog
+        '
+        Me.btnChooseLog.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnChooseLog.Location = New System.Drawing.Point(600, 172)
+        Me.btnChooseLog.Name = "btnChooseLog"
+        Me.btnChooseLog.Size = New System.Drawing.Size(87, 23)
+        Me.btnChooseLog.TabIndex = 93
+        Me.btnChooseLog.Text = "Choose Dir"
+        Me.btnChooseLog.UseVisualStyleBackColor = True
+        '
+        'txbLogFile
+        '
+        Me.txbLogFile.DataBindings.Add(New System.Windows.Forms.Binding("Text", Global.MaserApp.My.MySettings.Default, "LogPath", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.txbLogFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txbLogFile.Location = New System.Drawing.Point(153, 174)
+        Me.txbLogFile.Name = "txbLogFile"
+        Me.txbLogFile.Size = New System.Drawing.Size(418, 20)
+        Me.txbLogFile.TabIndex = 92
+        Me.txbLogFile.Text = Global.MaserApp.My.MySettings.Default.LogPath
+        '
+        'btnClearLog
+        '
+        Me.btnClearLog.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClearLog.Location = New System.Drawing.Point(693, 172)
+        Me.btnClearLog.Name = "btnClearLog"
+        Me.btnClearLog.Size = New System.Drawing.Size(87, 23)
+        Me.btnClearLog.TabIndex = 95
+        Me.btnClearLog.Text = "Clear Log"
+        Me.btnClearLog.UseVisualStyleBackColor = True
+        '
+        'fbdLogFile
+        '
+        Me.fbdLogFile.SelectedPath = Global.MaserApp.My.MySettings.Default.LogPath
+        '
         'frmOptions
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(933, 450)
         Me.ControlBox = False
+        Me.Controls.Add(Me.btnClearLog)
+        Me.Controls.Add(Me.lblLogFile)
+        Me.Controls.Add(Me.btnChooseLog)
+        Me.Controls.Add(Me.txbLogFile)
         Me.Controls.Add(Me.cbSendToFTP)
         Me.Controls.Add(Me.cbCompactDB)
         Me.Controls.Add(Me.txbPassword)
@@ -789,4 +845,9 @@ Partial Class frmOptions
     Friend WithEvents txbPassword As TextBox
     Friend WithEvents cbCompactDB As CheckBox
     Friend WithEvents cbSendToFTP As CheckBox
+    Friend WithEvents lblLogFile As Label
+    Friend WithEvents btnChooseLog As Button
+    Friend WithEvents txbLogFile As TextBox
+    Friend WithEvents btnClearLog As Button
+    Friend WithEvents fbdLogFile As FolderBrowserDialog
 End Class

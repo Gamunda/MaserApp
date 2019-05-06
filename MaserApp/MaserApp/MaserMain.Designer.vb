@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class MaserMain
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class MaserMain
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.msMain = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -77,7 +77,7 @@ Partial Class MaserMain
         'OptionsToolStripMenuItem
         '
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.OptionsToolStripMenuItem.Text = "&Options"
         '
         'HelpToolStripMenuItem
@@ -178,6 +178,7 @@ Partial Class MaserMain
         Me.pgbTask.BackColor = System.Drawing.SystemColors.Control
         Me.pgbTask.ForeColor = System.Drawing.Color.Khaki
         Me.pgbTask.Location = New System.Drawing.Point(31, 371)
+        Me.pgbTask.Maximum = 1000
         Me.pgbTask.Name = "pgbTask"
         Me.pgbTask.Size = New System.Drawing.Size(632, 20)
         Me.pgbTask.Style = System.Windows.Forms.ProgressBarStyle.Continuous

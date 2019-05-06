@@ -437,6 +437,18 @@ Namespace My
                 Me("Password") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\johnadams\Documents\maserlog.txt")>  _
+        Public Property LogPath() As String
+            Get
+                Return CType(Me("LogPath"),String)
+            End Get
+            Set
+                Me("LogPath") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

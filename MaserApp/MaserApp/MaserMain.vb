@@ -16,10 +16,6 @@ Public Class MaserMain
         Close()
     End Sub
 
-    Private Sub MaserMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
-
     Private Sub BtnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
         toggleGUI()
         bgwQueue.RunWorkerAsync()
@@ -119,7 +115,7 @@ Public Class MaserMain
             Application.DoEvents()
         Next
     End Sub
-    Private Sub WriteLog(logentry As String)
+    Public Sub WriteLog(logentry As String)
         Dim logfilename As String = "maserlog.txt"
         Dim logpath As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\" + logfilename
         Dim logfile As IO.StreamWriter
@@ -533,10 +529,9 @@ Public Class MaserMain
         wait(1)
 
         ' Delete comain records
-        If RunAccessQuery("DROP TABLE CO_Main;") <> 0 Then
+        If RunAccessQuery("DELETE * FROM CO_Main;") <> 0 Then
             FormatProgressReport(0, "", "# CO Failed #")
-            Return 1
-            Exit Function
+
         End If
 
         ' Import production comain
@@ -645,11 +640,11 @@ Public Class MaserMain
             {"House_Num_Exp", "Memo", "50"}
             }
 
-        'If ExportAccess(comainFields, My.Settings.CONewDB, My.Settings.WorkDB, "CO_MAIN") <> 0 Then
-        'FormatProgressReport(0, "", "# CO Failed #")
-        'Return 1
-        'Exit Function
-        'End If
+        If ExportAccess(comainFields, My.Settings.CONewDB, My.Settings.WorkDB, "CO_MAIN",,,, "brenda", "") <> 0 Then
+            FormatProgressReport(0, "", "# CO Failed #")
+            Return 1
+            Exit Function
+        End If
 
 
         ' Delete Null records (deleteCONull)
@@ -1276,9 +1271,7 @@ Public Class MaserMain
             Exit Function
         End If
 
-        ' Run cpm query (cpmquery) ##### Inner Join #####
-        ' ###############################################
-        ' #TODO
+        ' Run cpm query (cpmquery)
         Dim cpmqueryFields(,) As String =
             {{"PERNO", "Number", "50"},
             {"U_PERNO", "Text", "12"},
@@ -1492,7 +1485,7 @@ Public Class MaserMain
                     output.Write(buffer, 0, bytesIn)
                     TotalBytesIn += bytesIn
                     If filelength > 0 Then
-                        Dim perc As Integer = (TotalBytesIn / filelength) * 100
+                        Dim perc As Integer = (TotalBytesIn / filelength) * 1000
                         FormatProgressReport(perc, ftpfile + " Download", "")
                     End If
                 End If
@@ -1500,14 +1493,14 @@ Public Class MaserMain
             output.Close()
             stream.Close()
         Catch ex As Exception
-            FormatProgressReport(100, ftpfile + " Download", "Download of " + ftpfile + " failed.")
-            FormatProgressReport(100, "", ex.Message)
+            FormatProgressReport(1000, ftpfile + " Download", "Download of " + ftpfile + " failed.")
+            FormatProgressReport(1000, "", ex.Message)
             Return 1
 
             Exit Function
         End Try
 
-        FormatProgressReport(100, ftpfile + " Download", ftpfile + " downloaded successfully")
+        FormatProgressReport(1000, ftpfile + " Download", ftpfile + " downloaded successfully")
 
         wait(1)
         Return 0
@@ -1634,7 +1627,7 @@ Public Class MaserMain
                 x += 1
                 cmdText = preText
                 currentLineValues = csvTextParser.ReadFields
-                Dim perc As Integer = x / linecount * 100
+                Dim perc As Integer = x / linecount * 1000
                 FormatProgressReport(perc, textFile + " Import", "")
 
                 For i = 0 To fieldArray.Length - 1
@@ -1652,16 +1645,16 @@ Public Class MaserMain
             csvTextParser.Close()
 
         Catch ex As Exception
-            FormatProgressReport(100, "", ex.Message)
-            FormatProgressReport(100, "", "Import of " + textFile + " Failed")
+            FormatProgressReport(1000, "", ex.Message)
+            FormatProgressReport(1000, "", "Import of " + textFile + " Failed")
             Return 1
             Exit Function
         End Try
 
-        FormatProgressReport(100, "", "Import of " + textFile + " Successful")
+        FormatProgressReport(1000, "", "Import of " + textFile + " Successful")
         Return 0
     End Function
-    Private Function ExportAccess(fieldArray(,) As String, fromDB As String, toDB As String, fromTableName As String, Optional connectionType As String = "Access", Optional selectOveride As String = "", Optional toTableName As String = "") As Integer
+    Private Function ExportAccess(fieldArray(,) As String, fromDB As String, toDB As String, fromTableName As String, Optional connectionType As String = "Access", Optional selectOveride As String = "", Optional toTableName As String = "", Optional UserID As String = "", Optional Password As String = "") As Integer
         Dim selectText As String = ""
         Dim valueText As String = ""
         Dim fieldText As String = ""
@@ -1685,13 +1678,16 @@ Public Class MaserMain
         End If
         insertText = "INSERT INTO [" + toTableName + "] (" + fieldText + ") VALUES (" + valueText + ");"
 
-        FormatProgressReport(25, "Importing " + fromTableName, "Importing " + fromTableName + " from " + fromDB + " to " + toDB)
+        FormatProgressReport(0, "Importing " + fromTableName, "Importing " + fromTableName + " from " + fromDB + " to " + toDB)
 
         Try
             Dim fromConString As String = ""
             Select Case connectionType
                 Case "Access"
-                    fromConString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fromDB
+                    fromConString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fromDB + ";"
+                    If UserID <> "" Then
+                        fromConString += "User ID=" + UserID + ";Password=" + Password + ";Jet OLEDB:System Database=S:\Co system\Security.mdw"
+                    End If
                 Case "Sharepoint"
                     fromConString = "Provider=Microsoft.ACE.OLEDB.12.0;WSS;IMEX=2;RetrieveIds=Yes;DATABASE=" + fromDB + ";"
                 Case "DSN"
@@ -1707,6 +1703,7 @@ Public Class MaserMain
 
             'Create the data adapter with a SelectCommand using the first connection.
             Dim da As New OleDb.OleDbDataAdapter(selectText, fromDBCon)
+            AddHandler da.RowUpdated, New OleDb.OleDbRowUpdatedEventHandler(AddressOf OnRowUpdate)
 
             'Add the InsertCommand with the second connection.
             da.InsertCommand = New OleDb.OleDbCommand(insertText, toDBCon)
@@ -1751,16 +1748,23 @@ Public Class MaserMain
             fromDBCon.Close()
 
         Catch ex As Exception
-            FormatProgressReport(100, "", ex.Message)
-            FormatProgressReport(100, "", "Import of " + fromTableName + " from " + fromDB + " to " + toDB + " Failed")
-            FormatProgressReport(100, "", "Select Query:" + selectText)
-            FormatProgressReport(100, "", "Insert Query:" + insertText)
+            FormatProgressReport(1000, "", ex.Message)
+            FormatProgressReport(1000, "", "Import of " + fromTableName + " from " + fromDB + " to " + toDB + " Failed")
+            FormatProgressReport(1000, "", "Select Query:" + selectText)
+            FormatProgressReport(1000, "", "Insert Query:" + insertText)
             Return 1
             Exit Function
         End Try
-        FormatProgressReport(100, "Importing " + fromTableName, "Import of " + fromTableName + " from " + fromDB + " to " + toDB + " Successful")
+        FormatProgressReport(1000, "Importing " + fromTableName, "Import of " + fromTableName + " from " + fromDB + " to " + toDB + " Successful")
         Return 0
     End Function
+    Sub OnRowUpdate(ByVal sender As Object, ByVal args As OleDb.OleDbRowUpdatedEventArgs)
+        Dim tick As Integer = pgbTask.Value + 1
+        If tick > pgbTask.Maximum Then
+            tick = 0
+        End If
+        FormatProgressReport(tick, "", "")
+    End Sub
     Private Sub FormatProgressReport(taskPerc As Integer, taskStatus As String, consoleStatus As String, Optional overPerc As Integer = vbNull)
         If overPerc = vbNull Then
             Dim fullStatus As String = taskStatus + "|" + consoleStatus
@@ -1795,4 +1799,6 @@ Public Class MaserMain
     Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
         frmOptions.ShowDialog()
     End Sub
+
+
 End Class

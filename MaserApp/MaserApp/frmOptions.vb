@@ -32,4 +32,28 @@
             txbPlanningDB.Text = ofdPlanningDB.FileName
         End If
     End Sub
+
+    Private Sub BtnChooseLog_Click(sender As Object, e As EventArgs) Handles btnChooseLog.Click
+        If (fbdLogFile.ShowDialog() = DialogResult.OK) Then
+            If System.IO.File.Exists(fbdLogFile.SelectedPath + "\maserlog.txt") = False Then
+                System.IO.File.Create(fbdLogFile.SelectedPath + "\maserlog.txt")
+                MaserMain.WriteLog("!!! LOG FILE CREATED !!!")
+            End If
+            txbLogFile.Text = fbdLogFile.SelectedPath + "\maserlog.txt"
+            End If
+    End Sub
+
+    Private Sub BtnClearLog_Click(sender As Object, e As EventArgs) Handles btnClearLog.Click
+        Dim result As Integer = MessageBox.Show("Are you sure you want to clear the Log?", "Clear Log?", MessageBoxButtons.YesNo)
+        If result = DialogResult.Yes Then
+            If System.IO.File.Exists(My.Settings.LogPath) = True Then
+                System.IO.File.WriteAllText(My.Settings.LogPath, "")
+                MaserMain.WriteLog("!!! LOG CLEARED !!!")
+            Else
+                System.IO.File.Create(My.Settings.LogPath)
+                MaserMain.WriteLog("!!! LOG CLEARED !!!")
+            End If
+        End If
+
+    End Sub
 End Class
