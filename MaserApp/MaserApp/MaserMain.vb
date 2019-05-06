@@ -55,6 +55,9 @@ Public Class MaserMain
         End If
         pgbTask.Value = e.ProgressPercentage
         pgbOverall.Value = overPerc
+        lblPercOverall.Text = overPerc.ToString + "%"
+        Dim taskPerc As Integer = e.ProgressPercentage / 10
+        lblPercTask.Text = taskPerc.ToString + "%"
         If consoleUpdate <> "" Then
             WriteLog(consoleUpdate)
         End If
@@ -63,16 +66,27 @@ Public Class MaserMain
 
     Public Sub bgwQueue_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles bgwQueue.RunWorkerCompleted
         toggleGUI()
-
+        tmrTask.Enabled = False
+        Dim totalTime As String = ""
+        With TimeSpan.FromSeconds(timercount)
+            If .Hours.ToString("D2") <> "00" Then
+                totalTime = "[" + .Hours.ToString("D2") + " hrs " + .Minutes.ToString("D2") + " mins " + .Seconds.ToString("D2") + " secs]"
+            Else
+                totalTime = "[" + .Minutes.ToString("D2") + " mins " + .Seconds.ToString("D2") + " secs]"
+            End If
+        End With
         If e.Result = 0 Then
-            WriteLog("### Data Collection Completed Successfully ###")
+            WriteLog("### Data Collection Completed Successfully " + totalTime + " ###")
             pgbOverall.Value = 100
+            lblPercOverall.Text = "100%"
         Else
-            WriteLog("### Data Collection Failed ###")
+            WriteLog("### Data Collection Failed " + totalTime + " ###")
             pgbOverall.ForeColor = Color.DarkRed
             pgbOverall.Value = 100
+            lblPercOverall.Text = "100%"
         End If
-        tmrTask.Enabled = False
+
+
     End Sub
     Private Sub toggleGUI()
 
@@ -111,7 +125,7 @@ Public Class MaserMain
         bgwQueue.CancelAsync()
     End Sub
     Private Sub updateConsole(updateText As String)
-        rtbConsole.AppendText("$ [" + DateTime.Now + "]: " + updateText + vbNewLine)
+        rtbConsole.AppendText("$ [" + DateTime.Now + "]:  " + updateText + vbNewLine)
     End Sub
     Private Sub wait(ByVal seconds As Integer)
         For i As Integer = 0 To seconds * 100
@@ -1483,8 +1497,8 @@ Public Class MaserMain
             output = System.IO.File.Create(OutputFilePath)
             bytesIn = 1
 
-            Do Until bytesIn <1
-                                 bytesIn= stream.Read(buffer, 0, 1024)
+            Do Until bytesIn < 1
+                bytesIn = stream.Read(buffer, 0, 1024)
                 If bytesIn > 0 Then
                     output.Write(buffer, 0, bytesIn)
                     TotalBytesIn += bytesIn

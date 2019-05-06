@@ -49,6 +49,8 @@ Partial Class MaserMain
         Me.lblMinutes = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.lblSeconds = New System.Windows.Forms.Label()
+        Me.lblPercOverall = New System.Windows.Forms.Label()
+        Me.lblPercTask = New System.Windows.Forms.Label()
         Me.msMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -71,7 +73,7 @@ Partial Class MaserMain
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
         Me.ExitToolStripMenuItem.Text = "E&xit"
         '
         'ToolsToolStripMenuItem
@@ -267,12 +269,38 @@ Partial Class MaserMain
         Me.lblSeconds.Text = "00"
         Me.lblSeconds.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'lblPercOverall
+        '
+        Me.lblPercOverall.AutoSize = True
+        Me.lblPercOverall.BackColor = System.Drawing.Color.White
+        Me.lblPercOverall.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPercOverall.ForeColor = System.Drawing.Color.Black
+        Me.lblPercOverall.Location = New System.Drawing.Point(348, 422)
+        Me.lblPercOverall.Name = "lblPercOverall"
+        Me.lblPercOverall.Size = New System.Drawing.Size(23, 13)
+        Me.lblPercOverall.TabIndex = 15
+        Me.lblPercOverall.Text = "0%"
+        '
+        'lblPercTask
+        '
+        Me.lblPercTask.AutoSize = True
+        Me.lblPercTask.BackColor = System.Drawing.Color.White
+        Me.lblPercTask.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPercTask.ForeColor = System.Drawing.Color.Black
+        Me.lblPercTask.Location = New System.Drawing.Point(348, 376)
+        Me.lblPercTask.Name = "lblPercTask"
+        Me.lblPercTask.Size = New System.Drawing.Size(23, 13)
+        Me.lblPercTask.TabIndex = 16
+        Me.lblPercTask.Text = "0%"
+        '
         'MaserMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblPercTask)
+        Me.Controls.Add(Me.lblPercOverall)
         Me.Controls.Add(Me.lblSeconds)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.lblMinutes)
@@ -324,4 +352,6 @@ Partial Class MaserMain
     Friend WithEvents lblMinutes As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents lblSeconds As Label
+    Friend WithEvents lblPercOverall As Label
+    Friend WithEvents lblPercTask As Label
 End Class
