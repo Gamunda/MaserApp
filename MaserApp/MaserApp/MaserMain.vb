@@ -7,6 +7,9 @@ Public Class MaserMain
     Dim taxa1332 As New maserTask(False, False)
     Dim percMultiplier As Integer = 6
     Dim timercount As Integer = 0
+    Dim warnCount As Integer = 0
+    Dim skipCount As Integer = 0
+    Dim warnings As New List(Of String)
     Public Class ImportArguments
         Public _textfile As String
         Public _fieldarray As Array
@@ -68,19 +71,31 @@ Public Class MaserMain
         toggleGUI()
         tmrTask.Enabled = False
         Dim totalTime As String = ""
+
         With TimeSpan.FromSeconds(timercount)
             If .Hours.ToString("D2") <> "00" Then
-                totalTime = "[" + .Hours.ToString("D2") + " hrs " + .Minutes.ToString("D2") + " mins " + .Seconds.ToString("D2") + " secs]"
+                totalTime = .Hours.ToString("D2") + " hrs " + .Minutes.ToString("D2") + " mins " + .Seconds.ToString("D2") + " secs"
             Else
-                totalTime = "[" + .Minutes.ToString("D2") + " mins " + .Seconds.ToString("D2") + " secs]"
+                totalTime = .Minutes.ToString("D2") + " mins " + .Seconds.ToString("D2") + " secs"
             End If
         End With
+
+        Dim warningText As String = ""
+        If warnings.Count > 0 Then
+            For Each warning As String In warnings
+                warningText += vbCrLf + "          " + warning
+            Next
+        End If
         If e.Result = 0 Then
-            WriteLog("### Data Collection Completed Successfully " + totalTime + " ###")
+            WriteLog("### Data Collection Completed Successfully ###")
+            WriteLog("##### TotalTime: " + totalTime + " #####")
+            WriteLog("##### Skips: " + skipCount.ToString + " #####")
+            WriteLog("##### Warnings: " + warnCount.ToString + " {{{" + warningText + " }}} #####")
             pgbOverall.Value = 100
             lblPercOverall.Text = "100%"
         Else
-            WriteLog("### Data Collection Failed " + totalTime + " ###")
+            WriteLog("### Data Collection Failed in " + totalTime + " ###")
+            WriteLog("{{{ Warnings: " + warnCount.ToString + warningText + " }}}")
             pgbOverall.ForeColor = Color.DarkRed
             pgbOverall.Value = 100
             lblPercOverall.Text = "100%"
@@ -230,6 +245,7 @@ Public Class MaserMain
     Private Function funTaxa1332() As Integer
         If My.Settings.SecTaxa1332 = False Then
             FormatProgressReport(0, "", "#Taxa1332 Skipped #", 1 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -256,6 +272,7 @@ Public Class MaserMain
     Private Function funAcegis() As Integer
         If My.Settings.SecAcegis = False Then
             FormatProgressReport(0, "", "# Acegis Skipped #", 2 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -294,6 +311,7 @@ Public Class MaserMain
     Private Function funModiv() As Integer
         If My.Settings.SecModiv = False Then
             FormatProgressReport(0, "", "# Modiv Skipped #", 3 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -303,20 +321,24 @@ Public Class MaserMain
 
         ' File Copies
         If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\appserver3\mitchellhumphrey\taxconvert\acegis.txt") <> 0 Then
-            FormatProgressReport(0, "", "!! Warning Encountered !!")
-
+            FormatProgressReport(0, "", "!! Warning: File Copy Failed !!")
+            warnCount += 1
+            warnings.Add("FileCopy: " + My.Settings.WorkDir + "\acegis.txt,\\appserver3\mitchellhumphrey\taxconvert\acegis.txt")
         End If
         If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\mtcrm2016main\E$\FTGPropImport\NewUploads\acegis.txt") <> 0 Then
-            FormatProgressReport(0, "", "!! Warning Encountered !!")
-
+            FormatProgressReport(0, "", "!! Warning: File Copy Failed !!")
+            warnCount += 1
+            warnings.Add("FileCopy: " + My.Settings.WorkDir + "\acegis.txt,\\mtcrm2016main\E$\FTGPropImport\NewUploads\acegis.txt")
         End If
         If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\mtfinance2\programs\mcsj\importfiles\acegis.txt") <> 0 Then
-            FormatProgressReport(0, "", "!! Warning Encountered !!")
-
+            FormatProgressReport(0, "", "!! Warning: File Copy Failed !!")
+            warnCount += 1
+            warnings.Add("FileCopy: " + My.Settings.WorkDir + "\acegis.txt,\\mtfinance2\programs\mcsj\importfiles\acegis.txt")
         End If
         If CopyFile(My.Settings.WorkDir + "\acegis.txt", "\\mtfinance2\programs\mcsj\importfiles\taxa1332.dat") <> 0 Then
-            FormatProgressReport(0, "", "!! Warning Encountered !!")
-
+            FormatProgressReport(0, "", "!! Warning: File Copy Failed !!")
+            warnCount += 1
+            warnings.Add("FileCopy: " + My.Settings.WorkDir + "\acegis.txt,\\mtfinance2\programs\mcsj\importfiles\taxa1332.dat")
         End If
 
         ' Delete Mod4 records (deleteModivRecords)
@@ -351,9 +373,9 @@ Public Class MaserMain
 
         ' Create WIP table with condos (insertModivQ)
         If RunAccessQuery("DROP TABLE mod4Q;") <> 0 Then
-            FormatProgressReport(0, "", "# Modiv Failed #")
-            Return 1
-            Exit Function
+            FormatProgressReport(0, "", "!!  Warning: Drop Table Failed  !!")
+            warnCount += 1
+            warnings.Add("DropTable: mod4q")
         End If
 
         If RunAccessQuery("SELECT '32'+'_'+[BLOCK]+'_'+[LOT]+'_'+[QUALIFIER] AS Pin, modivup.BLOCK, modivup.LOT, modivup.QUALIFIER, modivup.NEWGISID, modivup.GISKEY, modivup.ACCOUNT, modivup.PROP_CLASS, modivup.PROP_LOCAT, modivup.BUILD_DESC, modivup.LAND_DESC, modivup.ACREAGE, modivup.ADDIT_LOTS, modivup.ZONING, modivup.TAX_MAP_PG, modivup.LAND_VAL, modivup.IMPROV_VAL, modivup.NET_TAX_VAL, modivup.OWNER, modivup.OWNER_ADDR, modivup.OWNER_CITY, modivup.OWNER_STATE, modivup.OWNER_ZIP, modivup.MTG_ACCT, modivup.PRIOR_YR_TX, modivup.CURR_YR_TX, modivup.DEED_BOOK, modivup.DEED_PAGE, modivup.DEED_DATE, modivup.SALES_PRICE, modivup.SENIOR_DED, modivup.VETERAN_DED, modivup.NUM_OWNERS, modivup.DEDUC_AMT, modivup.BILL_CODE, modivup.NUM_DWELLING, modivup.COMM_DWEL, modivup.TAX_DEL_CO, modivup.BUILD_CODE, modivup.YEAR_BUILT, modivup.ASSES_CODE, modivup.SPEC_TX_CO, modivup.EX_CODE1, modivup.EX_AMT1, modivup.EX_CODE2, modivup.EX_AMT2, modivup.EX_CODE3, modivup.EX_AMT3, modivup.EX_CODE4, modivup.EX_AMT4, modivup.UNSTRIPPED, modivup.CENSUS_TRK, modivup.CENSUS_BLK, modivup.DED_SURV_SPOUSE, modivup.DED_DISABLED, modivup.EPL_OWNER, modivup.EPL_USE, modivup.EPL_DESC, modivup.EPL_FILE_DATE, modivup.EPL_FURTHER_DATE, modivup.EPL_STATUTE, modivup.EPL_FNAME, modivup.OLD_BLOCK, modivup.OLD_LOT, modivup.OLD_QUAL, modivup.SALE_NU_CD, modivup.TENANT_REB_FLAG, modivup.TENANT_REB_YEAR, modivup.TENANT_REB_TAX, modivup.TENANT_REB_ASSMT, modivup.NEIGHBORHOOD, modivup.GIS_INDEX, modivup.NEWGISID2 INTO mod4Q FROM modivup WHERE (((modivup.QUALIFIER) Like 'C*' Or (modivup.QUALIFIER) Like 'c*'));") <> 0 Then
@@ -371,9 +393,9 @@ Public Class MaserMain
 
         ' Create Maser table (modivquery)
         If RunAccessQuery("DROP TABLE mod4;") <> 0 Then
-            FormatProgressReport(0, "", "# Modiv Failed #")
-            Return 1
-            Exit Function
+            FormatProgressReport(0, "", "!! Warning: Drop Table Failed !!")
+            warnCount += 1
+            warnings.Add("DropTable: mod4")
         End If
 
         If RunAccessQuery("SELECT '32'+'_'+[BLOCK]+'_'+[LOT] AS Pin, modivup.BLOCK, modivup.LOT, modivup.QUALIFIER, modivup.NEWGISID, modivup.GISKEY, modivup.ACCOUNT, modivup.PROP_CLASS, modivup.PROP_LOCAT, modivup.BUILD_DESC, modivup.LAND_DESC, modivup.ACREAGE, modivup.ADDIT_LOTS, modivup.ZONING, modivup.TAX_MAP_PG, modivup.LAND_VAL, modivup.IMPROV_VAL, modivup.NET_TAX_VAL, modivup.OWNER, modivup.OWNER_ADDR, modivup.OWNER_CITY, modivup.OWNER_STATE, modivup.OWNER_ZIP, modivup.MTG_ACCT, modivup.PRIOR_YR_TX, modivup.CURR_YR_TX, modivup.DEED_BOOK, modivup.DEED_PAGE, modivup.DEED_DATE, modivup.SALES_PRICE, modivup.SENIOR_DED, modivup.VETERAN_DED, modivup.NUM_OWNERS, modivup.DEDUC_AMT, modivup.BILL_CODE, modivup.NUM_DWELLING, modivup.COMM_DWEL, modivup.TAX_DEL_CO, modivup.BUILD_CODE, modivup.YEAR_BUILT, modivup.ASSES_CODE, modivup.SPEC_TX_CO, modivup.EX_CODE1, modivup.EX_AMT1, modivup.EX_CODE2, modivup.EX_AMT2, modivup.EX_CODE3, modivup.EX_AMT3, modivup.EX_CODE4, modivup.EX_AMT4, modivup.UNSTRIPPED, modivup.CENSUS_TRK, modivup.CENSUS_BLK, modivup.DED_WIDOWS, modivup.DED_SURV_SPOUSE, modivup.DED_DISABLED, modivup.EPL_OWNER, modivup.EPL_USE, modivup.EPL_DESC, modivup.EPL_FILE_DATE, modivup.EPL_FURTHER_DATE, modivup.EPL_STATUTE, modivup.EPL_FNAME, modivup.OLD_BLOCK, modivup.OLD_LOT, modivup.OLD_QUAL, modivup.SALE_NU_CD, modivup.TENANT_REB_FLAG, modivup.TENANT_REB_YEAR, modivup.TENANT_REB_TAX, modivup.TENANT_REB_ASSMT, modivup.NEIGHBORHOOD, modivup.GIS_INDEX, modivup.NEWGISID2 INTO mod4 FROM modivup;") <> 0 Then
@@ -391,9 +413,9 @@ Public Class MaserMain
 
         ' Make Qfarm records (MakeQfarm)
         If RunAccessQuery("DROP TABLE MOD4QFARM;") <> 0 Then
-            FormatProgressReport(0, "", "# Modiv Failed #")
-            Return 1
-            Exit Function
+            FormatProgressReport(0, "", "!! Warning: Drop Table Failed !!")
+            warnCount += 1
+            warnings.Add("DropTable: MOD4QFARM")
         End If
 
         If RunAccessQuery("SELECT '32_'+[modivup].[BLOCK]+'_'+[LOT]+'_'+[QUALIFIER] AS Pin, modivup.BLOCK, modivup.LOT, modivup.QUALIFIER, modivup.NEWGISID, modivup.TAX_MAP_PG, modivup.GISKEY, modivup.ACCOUNT, modivup.PROP_CLASS, modivup.PROP_LOCAT, modivup.BUILD_DESC, modivup.LAND_DESC, modivup.ACREAGE, modivup.ADDIT_LOTS, modivup.ZONING, modivup.LAND_VAL, modivup.IMPROV_VAL, modivup.NET_TAX_VAL, modivup.OWNER, modivup.OWNER_ADDR, modivup.OWNER_CITY, modivup.OWNER_STATE, modivup.OWNER_ZIP, modivup.MTG_ACCT INTO MOD4QFARM FROM modivup WHERE (((modivup.QUALIFIER)='QFARM'));") <> 0 Then
@@ -539,6 +561,7 @@ Public Class MaserMain
     Private Function funCo() As Integer
         If My.Settings.SecCo = False Then
             FormatProgressReport(0, "", "# CO Skipped #", 4 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -549,7 +572,8 @@ Public Class MaserMain
         ' Delete comain records
         If RunAccessQuery("DELETE * FROM CO_Main;") <> 0 Then
             FormatProgressReport(0, "", "# CO Failed #")
-
+            Return 1
+            Exit Function
         End If
 
         ' Import production comain
@@ -674,9 +698,9 @@ Public Class MaserMain
 
         ' Run CO query (coquery)
         If RunAccessQuery("DROP TABLE CO") <> 0 Then
-            FormatProgressReport(0, "", "# Modiv Failed #")
-            Return 1
-            Exit Function
+            FormatProgressReport(0, "", "!! Warning: Drop Table Failed !!")
+            warnCount += 1
+            warnings.Add("DropTable: CO")
         End If
 
         If RunAccessQuery("SELECT CO_Main.Co_number, CO_Main.BLOCK, CO_Main.LOT, CO_Main.No_Bedrooms, CO_Main.Transfer_date, CO_Main.Sale_Rental, CO_Main.Occupied, CO_Main.Insp_Date, CO_Main.IssuedDate, '32_'+CO_Main!block+'_'+CO_Main!lot AS PIN INTO CO FROM CO_Main;") <> 0 Then
@@ -711,6 +735,7 @@ Public Class MaserMain
     Private Function funSeptics() As Integer
         If My.Settings.SecSeptics = False Then
             FormatProgressReport(0, "", "# Septics Skipped #", 5 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -750,6 +775,7 @@ Public Class MaserMain
     Private Function funBco() As Integer
         If My.Settings.SecBCO = False Then
             FormatProgressReport(0, "", "# BCO Skipped #", 6 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -802,6 +828,7 @@ Public Class MaserMain
     Private Function funZba() As Integer
         If My.Settings.SecZBA = False Then
             FormatProgressReport(0, "", "# ZBA Skipped #", 7 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -840,8 +867,9 @@ Public Class MaserMain
 
         ' Run zba query (ZoneBoard)
         If RunAccessQuery("DROP TABLE ZBA") <> 0 Then
-            FormatProgressReport(0, "", "# ZBA Failed #")
-
+            FormatProgressReport(0, "", "!! Warning: Drop Table Failed !!")
+            warnCount += 1
+            warnings.Add("DropTable: ZBA")
         End If
 
         If RunAccessQuery("SELECT [zoning].[Applicant], [zoning].[Zone], [zoning].[File #], [zoning].[Block], [zoning].[Lot], [zoning].[Explanation], [zoning].[Decision], [zoning].[Date], '32'+'_'+[zoning].[Block]+'_'+[zoning].[Lot] AS Pin, [zoning].[Additional Lot 2], [zoning].[Additional Lot 3], [zoning].[Additional Lot 4] INTO ZBA FROM [zoning];") <> 0 Then
@@ -878,6 +906,7 @@ Public Class MaserMain
     Private Function funPla() As Integer
         If My.Settings.SecPLA = False Then
             FormatProgressReport(0, "", "# PLA Skipped #", 8 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -917,8 +946,9 @@ Public Class MaserMain
 
         ' Run pla query (PlanBoard)
         If RunAccessQuery("DROP TABLE PLA") <> 0 Then
-            FormatProgressReport(0, "", "# PLA Failed #")
-
+            FormatProgressReport(0, "", "!! Warning: Drop Table Failed !!")
+            warnCount += 1
+            warnings.Add("DropTable: PLA")
         End If
 
         If RunAccessQuery("SELECT [planning].[Applicant], [planning].[Zone], [planning].[File #], [planning].[Block], [planning].[Lot], [planning].[Variance/Application Type], [planning].[Explanation], [planning].[Decision], [planning].[Date], [planning].[TYPE], [planning].[Additional Lot 1], [planning].[Additional Lot 2], [planning].[Additional Lot 3], [planning].[Additional Lot 4], '32'+'_'+[planning].[Block]+'_'+[planning].[Lot] AS Pin INTO PLA FROM [planning];") <> 0 Then
@@ -959,6 +989,7 @@ Public Class MaserMain
         ' Replaced by FTG No longer in use
         If My.Settings.SecMac = False Then
             FormatProgressReport(0, "", "# MAC Skipped #", 9 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -973,6 +1004,7 @@ Public Class MaserMain
     Private Function funCd() As Integer
         If My.Settings.SecCD = False Then
             FormatProgressReport(0, "", "# CD Skipped #", 10 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -1210,8 +1242,9 @@ Public Class MaserMain
 
         ' Run cd query (CDQuery)
         If RunAccessQuery("DROP TABLE CD") <> 0 Then
-            FormatProgressReport(0, "", "# CD Failed #")
-
+            FormatProgressReport(0, "", "!! Warnings: Drop Table Failed !!")
+            warnCount += 1
+            warnings.Add("DropTable: CD")
         End If
 
         If RunAccessQuery("SELECT '32_'+[CDBG].[Block]+'_'+[CDBG].[Lot] AS Pin, CDBG.Status, CDBG.Application_Number, CDBG.Application_Date, CDBG.Applicant_Name, CDBG.[Applicant Phone], CDBG.Street_Address, CDBG.City, CDBG.State, CDBG.Zip, CDBG.CoOwnerName, CDBG.[Household Members], CDBG.HouseholdSize, CDBG.NumFemales, CDBG.NumMales, CDBG.Relatives, CDBG.Elderly, CDBG.Handicapped, CDBG.HandicappedNo, CDBG.FloodHazzard, CDBG.FloodInsurance, CDBG.[Emergency Repair], CDBG.Insulation, CDBG.Septic, CDBG.Water, CDBG.Sump, CDBG.SmokeDetector, CDBG.Roof, CDBG.Electric, CDBG.Plumbing, CDBG.Structural, CDBG.[HC Access], CDBG.[Windows/Doors], CDBG.Sheetrock, CDBG.Stairs, CDBG.Heat, CDBG.Pest, CDBG.Misc, CDBG.MiscExplain INTO CD FROM CDBG;") <> 0 Then
@@ -1275,6 +1308,7 @@ Public Class MaserMain
     Private Function funCpm() As Integer
         If My.Settings.SecCPM = False Then
             FormatProgressReport(0, "", "# CPM Skipped #", 11 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -1362,6 +1396,7 @@ Public Class MaserMain
         ' Not in use
         If My.Settings.SecFTG = False Then
             FormatProgressReport(0, "", "# FTG Skipped #", 12 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -1376,6 +1411,7 @@ Public Class MaserMain
     Private Function funZone() As Integer
         If My.Settings.SecZone = False Then
             FormatProgressReport(0, "", "# Zone Skipped #", 13 * percMultiplier)
+            skipCount += 1
             Return 0
             Exit Function
         End If
@@ -1404,8 +1440,9 @@ Public Class MaserMain
 
         ' Run Query (PrimeZone)
         If RunAccessQuery("DROP TABLE TempZone") <> 0 Then
-            FormatProgressReport(0, "", "# Zone Failed #")
-
+            FormatProgressReport(0, "", "!! Warning: Drop Table Failed !!")
+            warnCount += 1
+            warnings.Add("DropTable: TempZone")
         End If
         If RunAccessQuery("SELECT [PIN], [BLOCK], [LOT], [Application Date], [DATE OF REVIEW], [Status], [Zone], [Proposed Development], [Comments] INTO [TempZone] FROM [zone];") <> 0 Then
             FormatProgressReport(0, "", "# Zone Failed #")
