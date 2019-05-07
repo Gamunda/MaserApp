@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Net
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.Office.Interop.Access
 
 Public Class MaserMain
     Dim taxa1332 As New maserTask(False, False)
@@ -165,6 +166,10 @@ Public Class MaserMain
     End Sub
     Private Function dataCollection() As Integer
         FormatProgressReport(0, "", "### Data Collection Started ###", 0)
+        If CreateAccessDatabase(My.Settings.SendDB) <> 0 Then
+            Return 1
+            Exit Function
+        End If
         If (funTaxa1332() <> 0) Then
             Return 1
             Exit Function
@@ -230,7 +235,7 @@ Public Class MaserMain
             Exit Function
         End If
 
-        If (compactDatabase() <> 0) Then
+        If (compactDatabase(My.Settings.SendDB, My.Settings.WorkDir + "\senddbcompact.mdb") <> 0) Then
             Return 1
             Exit Function
         End If
@@ -1829,13 +1834,31 @@ Public Class MaserMain
             bgwQueue.ReportProgress(taskPerc, fullStatus)
         End If
     End Sub
-    Private Function compactDatabase() As Integer
-        ' #TODO
+    Private Function compactDatabase(origFile As String, tempFile As String) As Integer
         If My.Settings.CompactDB = False Then
             FormatProgressReport(0, "", "# Compact Database Skipped #", 14 * percMultiplier)
             Return 0
             Exit Function
         End If
+
+        FormatProgressReport(0, "Compacting" + origFile, "Compacting " + origFile)
+
+        Try
+            'First check the file u want to compact exists or not
+            If File.Exists(origFile) Then
+                Dim db As New Dao.DBEngine()
+                'CompactDatabase has two parameters, creates a copy of 
+                'compact DB at the Destination path
+                db.CompactDatabase(origFile, tempFile)
+            End If
+            'restore the original file from the compacted file
+            If File.Exists(tempFile) Then
+                File.Delete(origFile)
+                File.Move(tempFile, origFile)
+            End If
+        Catch ex As Exception
+            FormatProgressReport(1000, "", ex.Message)
+        End Try
 
         FormatProgressReport(0, "", "# Compact Database Completed #", 14 * percMultiplier)
         Return 0
@@ -1863,4 +1886,33 @@ Public Class MaserMain
             lblSeconds.Text = .Seconds.ToString("D2")
         End With
     End Sub
+    Public Function CreateAccessDatabase(ByVal DatabaseFullPath As String) As Integer
+        FormatProgressReport(0, "Creating SendDB", "Creating " + DatabaseFullPath)
+        Dim cat As New ADOX.Catalog()
+        If System.IO.File.Exists(DatabaseFullPath) = True Then
+            FormatProgressReport(1000, "", "SendDB Exists")
+            Return 0
+            Exit Function
+        End If
+        Try
+
+            Dim sCreateString As String
+            sCreateString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" &
+                           DatabaseFullPath
+            cat.Create(sCreateString)
+
+
+
+        Catch ex As Exception
+            FormatProgressReport(1000, "", ex.Message)
+            cat = Nothing
+            Return 1
+            Exit Function
+
+
+        End Try
+        FormatProgressReport(0, "", "# Created SendDB #")
+        cat = Nothing
+        Return 0
+    End Function
 End Class
